@@ -3,7 +3,7 @@
     "adlite": {
       "loon": {
         "config_sha256": "a79a8ed7c506f260765fe93b7eedea1482f54a4a9e5e3ceeef104dbea59b4c52",
-        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
+        "engine": "edcd52f952386a45b4841f1fc818bc6e252eaa67ca38600cafecea1557b963a4",
         "inputs": [
           {
             "sha256": "42c8c3d7c504e5b8678402091d6c271dce3a372866e12ebc694ceec6fc54d69d",
@@ -18,7 +18,7 @@
       },
       "mihomo": {
         "config_sha256": "a79a8ed7c506f260765fe93b7eedea1482f54a4a9e5e3ceeef104dbea59b4c52",
-        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
+        "engine": "edcd52f952386a45b4841f1fc818bc6e252eaa67ca38600cafecea1557b963a4",
         "inputs": [
           {
             "sha256": "42c8c3d7c504e5b8678402091d6c271dce3a372866e12ebc694ceec6fc54d69d",
@@ -51,7 +51,7 @@
     "bitget": {
       "loon": {
         "config_sha256": "0d5e43576cdde2b5317fa02f5aca2d23596f134bc45fc20c4d7d44dde5b3c951",
-        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
+        "engine": "edcd52f952386a45b4841f1fc818bc6e252eaa67ca38600cafecea1557b963a4",
         "inputs": [
           {
             "sha256": "dc583a63b81a8ff203a64155fbfb7111e6bcd4476aa615141bbb2e58d5643cca",
@@ -74,7 +74,7 @@
       },
       "mihomo": {
         "config_sha256": "0d5e43576cdde2b5317fa02f5aca2d23596f134bc45fc20c4d7d44dde5b3c951",
-        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
+        "engine": "edcd52f952386a45b4841f1fc818bc6e252eaa67ca38600cafecea1557b963a4",
         "inputs": [
           {
             "sha256": "dc583a63b81a8ff203a64155fbfb7111e6bcd4476aa615141bbb2e58d5643cca",
@@ -123,7 +123,7 @@
     "direct": {
       "loon": {
         "config_sha256": "9bf22da0372257d210352129ea8b19a0425c79e6a68be35ddf6f3af0279aaab9",
-        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
+        "engine": "edcd52f952386a45b4841f1fc818bc6e252eaa67ca38600cafecea1557b963a4",
         "inputs": [
           {
             "sha256": "05c84ca7fca72deff24822a4de46611ae35b2dfd331aab7ec56f0663d35fd7f1",
@@ -137,7 +137,7 @@
       },
       "mihomo": {
         "config_sha256": "9bf22da0372257d210352129ea8b19a0425c79e6a68be35ddf6f3af0279aaab9",
-        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
+        "engine": "edcd52f952386a45b4841f1fc818bc6e252eaa67ca38600cafecea1557b963a4",
         "inputs": [
           {
             "sha256": "05c84ca7fca72deff24822a4de46611ae35b2dfd331aab7ec56f0663d35fd7f1",
@@ -170,7 +170,7 @@
     "espn": {
       "loon": {
         "config_sha256": "42daba81cdb37c8dacdc3d66840f18888c8357cf85069c6a0fccf8d12f939e82",
-        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
+        "engine": "edcd52f952386a45b4841f1fc818bc6e252eaa67ca38600cafecea1557b963a4",
         "inputs": [
           {
             "sha256": "1512b8b80b2177b975ef0b0a13459adeb27dd37d6579b103816185ae33825baa",
@@ -189,7 +189,7 @@
       },
       "mihomo": {
         "config_sha256": "42daba81cdb37c8dacdc3d66840f18888c8357cf85069c6a0fccf8d12f939e82",
-        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
+        "engine": "edcd52f952386a45b4841f1fc818bc6e252eaa67ca38600cafecea1557b963a4",
         "inputs": [
           {
             "sha256": "1512b8b80b2177b975ef0b0a13459adeb27dd37d6579b103816185ae33825baa",
@@ -230,7 +230,7 @@
     "f1tv": {
       "loon": {
         "config_sha256": "8486a0678d15ee8af9f5aef482d2da4952a14f9dca55e4fab374420f9abc40b8",
-        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
+        "engine": "edcd52f952386a45b4841f1fc818bc6e252eaa67ca38600cafecea1557b963a4",
         "inputs": [
           {
             "sha256": "71189609d9ab0dfe7b72920719775c11f2336c0c41a8118e2b8edaf8eb5ed36c",
@@ -255,7 +255,7 @@
       },
       "mihomo": {
         "config_sha256": "8486a0678d15ee8af9f5aef482d2da4952a14f9dca55e4fab374420f9abc40b8",
-        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
+        "engine": "edcd52f952386a45b4841f1fc818bc6e252eaa67ca38600cafecea1557b963a4",
         "inputs": [
           {
             "sha256": "71189609d9ab0dfe7b72920719775c11f2336c0c41a8118e2b8edaf8eb5ed36c",
@@ -282,7 +282,7 @@
     "fakeip-filter": {
       "mihomo": {
         "config_sha256": "3ff4d3dfbad44ac04146146e657613be71b427b198198909ede321af8e202cc1",
-        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
+        "engine": "edcd52f952386a45b4841f1fc818bc6e252eaa67ca38600cafecea1557b963a4",
         "inputs": [
           {
             "sha256": "92234d0fd12da71a602d1299f258e9c51f2e5c5535998dfa766356ff2d7904f1",
@@ -302,17 +302,9 @@
     },
     "merged_rules": {
       "loon": {
-        "config_sha256": "596cd9d3621aab4de6f31fb39957b14ec8515052071359ac38aea4817af93b44",
-        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
+        "config_sha256": "22e0caa2c9eaa7299047e7eca8204d65517e06b25b47b7af463bf6b45eec5022",
+        "engine": "edcd52f952386a45b4841f1fc818bc6e252eaa67ca38600cafecea1557b963a4",
         "inputs": [
-          {
-            "sha256": "03fdfc75b6d42893dc8636cea8a81e72c559a6f7e3063af5683455f494fd54a1",
-            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Loon/ProxyLite/ProxyLite.list"
-          },
-          {
-            "sha256": "c5fd540781605fa2b0e9fc8ee08698799559fae8ad296f33e70890f9cd36b9f7",
-            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Loon/Global/Global.list"
-          },
           {
             "sha256": "9d64e0fe06a55eea536c999c9a05ef35734772c140bf33d38bbec5a69f361f38",
             "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Proxy/Proxy.list"
@@ -322,28 +314,20 @@
             "source": "https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/ruleset/gfw.txt"
           },
           {
-            "sha256": "58b12feef7998d92a61da653a0af097bb07268631fafc9647df293d2ec89f71e",
-            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Loon/GlobalMedia/GlobalMedia.list"
+            "sha256": "92faaf6277d5c868f5ee6fa49e65bf9c8a888f31c5333b499aae21cc2fe34cef",
+            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/GlobalMedia/GlobalMedia.list"
           }
         ],
         "omitted": {},
         "outputs": {
-          "lq/generated/merged_rules.list": "24ae58f9350d20d8f7f75467ffde6f4e36c639375a551906be1515e3e2f74edb"
+          "lq/generated/merged_rules.list": "c0bf31d7683398bee74a70ec6b1e8111b0c42badf8cc73faec09cdd8eac6c431"
         },
-        "rules": 8503
+        "rules": 9465
       },
       "mihomo": {
-        "config_sha256": "596cd9d3621aab4de6f31fb39957b14ec8515052071359ac38aea4817af93b44",
-        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
+        "config_sha256": "22e0caa2c9eaa7299047e7eca8204d65517e06b25b47b7af463bf6b45eec5022",
+        "engine": "edcd52f952386a45b4841f1fc818bc6e252eaa67ca38600cafecea1557b963a4",
         "inputs": [
-          {
-            "sha256": "03fdfc75b6d42893dc8636cea8a81e72c559a6f7e3063af5683455f494fd54a1",
-            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Loon/ProxyLite/ProxyLite.list"
-          },
-          {
-            "sha256": "c5fd540781605fa2b0e9fc8ee08698799559fae8ad296f33e70890f9cd36b9f7",
-            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Loon/Global/Global.list"
-          },
           {
             "sha256": "9d64e0fe06a55eea536c999c9a05ef35734772c140bf33d38bbec5a69f361f38",
             "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Proxy/Proxy.list"
@@ -353,18 +337,15 @@
             "source": "https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/ruleset/gfw.txt"
           },
           {
-            "sha256": "58b12feef7998d92a61da653a0af097bb07268631fafc9647df293d2ec89f71e",
-            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Loon/GlobalMedia/GlobalMedia.list"
+            "sha256": "92faaf6277d5c868f5ee6fa49e65bf9c8a888f31c5333b499aae21cc2fe34cef",
+            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/GlobalMedia/GlobalMedia.list"
           }
         ],
-        "omitted": {
-          "URL-REGEX": 1,
-          "USER-AGENT": 78
-        },
+        "omitted": {},
         "outputs": {
-          "cat/merged_rules.yaml": "b9c7e717b6ed5889221cd8b0bc8e2a1aa2b7a7326ce48a6434b035bc828f5eb8"
+          "cat/merged_rules.yaml": "19df8473ba167dacc9d96201bbe6d8fd8881cf8be6179b5eda047ee7319da14b"
         },
-        "rules": 8424
+        "rules": 9465
       },
       "singbox": {
         "config_sha256": "596cd9d3621aab4de6f31fb39957b14ec8515052071359ac38aea4817af93b44",
@@ -405,7 +386,7 @@
     "proxy": {
       "loon": {
         "config_sha256": "a14a8f09134ceaac123be259754bcdb190523002f7150c85393d3ac4736f8f37",
-        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
+        "engine": "edcd52f952386a45b4841f1fc818bc6e252eaa67ca38600cafecea1557b963a4",
         "inputs": [
           {
             "sha256": "70c7babde180465f220fce280b39265a3cae5b614df892e522eab61d70d551eb",
@@ -419,7 +400,7 @@
       },
       "mihomo": {
         "config_sha256": "a14a8f09134ceaac123be259754bcdb190523002f7150c85393d3ac4736f8f37",
-        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
+        "engine": "edcd52f952386a45b4841f1fc818bc6e252eaa67ca38600cafecea1557b963a4",
         "inputs": [
           {
             "sha256": "70c7babde180465f220fce280b39265a3cae5b614df892e522eab61d70d551eb",
