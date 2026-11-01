@@ -6,30 +6,30 @@
         "engine": "7bee1719df034796ea3b4cbabbe083b109a5b5f9c12c01410a1aaeb6bd9a10e8",
         "inputs": [
           {
-            "sha256": "4b1dd4cea4f960112947aae4c39f43d5df191624d9dd3018a2868e3db1d2f622",
+            "sha256": "12c9c05d62d6509ec7a673df679b8fc6a809fa45bd1edbda43059f8c351f8690",
             "source": "https://raw.githubusercontent.com/deezertidal/private/refs/heads/main/rule/ADLite.list"
           }
         ],
         "omitted": {},
         "outputs": {
-          "lq/generated/adlite.list": "238109650540ef585cf8bf749137525048fa30f35727ef5d70616c74fadd665b"
+          "lq/generated/adlite.list": "115e164991d9b7c3ce8563c84adf8c3cb495cccd1d11d8e7c7f6f9c577c6008d"
         },
-        "rules": 51359
+        "rules": 51734
       },
       "mihomo": {
         "config_sha256": "a79a8ed7c506f260765fe93b7eedea1482f54a4a9e5e3ceeef104dbea59b4c52",
         "engine": "7bee1719df034796ea3b4cbabbe083b109a5b5f9c12c01410a1aaeb6bd9a10e8",
         "inputs": [
           {
-            "sha256": "4b1dd4cea4f960112947aae4c39f43d5df191624d9dd3018a2868e3db1d2f622",
+            "sha256": "12c9c05d62d6509ec7a673df679b8fc6a809fa45bd1edbda43059f8c351f8690",
             "source": "https://raw.githubusercontent.com/deezertidal/private/refs/heads/main/rule/ADLite.list"
           }
         ],
         "omitted": {},
         "outputs": {
-          "cat/adlite.yaml": "1c6168615a2af0c3190b875b668eadb0ecde872cf8bcc5e3be1ffc3ca9e90f4a"
+          "cat/adlite.yaml": "4caf9830ac238b390caa67bc0287f984691ec5b0796550d9616138533344f4e2"
         },
-        "rules": 51359
+        "rules": 51734
       },
       "singbox": {
         "config_sha256": "a79a8ed7c506f260765fe93b7eedea1482f54a4a9e5e3ceeef104dbea59b4c52",
@@ -335,7 +335,7 @@
             "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Proxy/Proxy.list"
           },
           {
-            "sha256": "2c9ae6b0e8c270856ba0ae6d39b7d2ec5178027ea4e3c70624906c70ca9f87e8",
+            "sha256": "f05b506dc2634c9569a346f6e6488ed51be882209036585ef015f52a6fbee0ae",
             "source": "https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/ruleset/gfw.txt"
           },
           {
@@ -345,9 +345,9 @@
         ],
         "omitted": {},
         "outputs": {
-          "lq/generated/merged_rules.list": "045ca09b9a1ab217d9edbab3f9b55afb23fd296ae35f8cdd4ed65c05460f7816"
+          "lq/generated/merged_rules.list": "24ae58f9350d20d8f7f75467ffde6f4e36c639375a551906be1515e3e2f74edb"
         },
-        "rules": 8501
+        "rules": 8503
       },
       "mihomo": {
         "config_sha256": "596cd9d3621aab4de6f31fb39957b14ec8515052071359ac38aea4817af93b44",
@@ -366,7 +366,7 @@
             "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Proxy/Proxy.list"
           },
           {
-            "sha256": "2c9ae6b0e8c270856ba0ae6d39b7d2ec5178027ea4e3c70624906c70ca9f87e8",
+            "sha256": "f05b506dc2634c9569a346f6e6488ed51be882209036585ef015f52a6fbee0ae",
             "source": "https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/ruleset/gfw.txt"
           },
           {
@@ -379,9 +379,9 @@
           "USER-AGENT": 78
         },
         "outputs": {
-          "cat/merged_rules.yaml": "19f0c5125b0501f882260112cc3f3fe1e5eafb809805bd68737965be1076f7f7"
+          "cat/merged_rules.yaml": "b9c7e717b6ed5889221cd8b0bc8e2a1aa2b7a7326ce48a6434b035bc828f5eb8"
         },
-        "rules": 8422
+        "rules": 8424
       },
       "singbox": {
         "config_sha256": "596cd9d3621aab4de6f31fb39957b14ec8515052071359ac38aea4817af93b44",
