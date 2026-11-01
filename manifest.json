@@ -3,7 +3,7 @@
     "adlite": {
       "loon": {
         "config_sha256": "a79a8ed7c506f260765fe93b7eedea1482f54a4a9e5e3ceeef104dbea59b4c52",
-        "engine": "27e26d9abb65e3acf98aa127cc5f42d2eba91efc9f94daee3c8a018c4c006122",
+        "engine": "2445dfc71879265d6c4b51c52ef37ecf86006f4e944d3beab5c57001dbe6c3b7",
         "inputs": [
           {
             "sha256": "92d504857596bb208895f492295cda0fbe5cb655f334cc9d12ab74a5cd3acfdb",
@@ -18,7 +18,7 @@
       },
       "mihomo": {
         "config_sha256": "a79a8ed7c506f260765fe93b7eedea1482f54a4a9e5e3ceeef104dbea59b4c52",
-        "engine": "27e26d9abb65e3acf98aa127cc5f42d2eba91efc9f94daee3c8a018c4c006122",
+        "engine": "2445dfc71879265d6c4b51c52ef37ecf86006f4e944d3beab5c57001dbe6c3b7",
         "inputs": [
           {
             "sha256": "92d504857596bb208895f492295cda0fbe5cb655f334cc9d12ab74a5cd3acfdb",
@@ -51,7 +51,7 @@
     "bitget": {
       "loon": {
         "config_sha256": "0d5e43576cdde2b5317fa02f5aca2d23596f134bc45fc20c4d7d44dde5b3c951",
-        "engine": "27e26d9abb65e3acf98aa127cc5f42d2eba91efc9f94daee3c8a018c4c006122",
+        "engine": "2445dfc71879265d6c4b51c52ef37ecf86006f4e944d3beab5c57001dbe6c3b7",
         "inputs": [
           {
             "sha256": "dc583a63b81a8ff203a64155fbfb7111e6bcd4476aa615141bbb2e58d5643cca",
@@ -74,7 +74,7 @@
       },
       "mihomo": {
         "config_sha256": "0d5e43576cdde2b5317fa02f5aca2d23596f134bc45fc20c4d7d44dde5b3c951",
-        "engine": "27e26d9abb65e3acf98aa127cc5f42d2eba91efc9f94daee3c8a018c4c006122",
+        "engine": "2445dfc71879265d6c4b51c52ef37ecf86006f4e944d3beab5c57001dbe6c3b7",
         "inputs": [
           {
             "sha256": "dc583a63b81a8ff203a64155fbfb7111e6bcd4476aa615141bbb2e58d5643cca",
@@ -123,7 +123,7 @@
     "direct": {
       "loon": {
         "config_sha256": "9bf22da0372257d210352129ea8b19a0425c79e6a68be35ddf6f3af0279aaab9",
-        "engine": "27e26d9abb65e3acf98aa127cc5f42d2eba91efc9f94daee3c8a018c4c006122",
+        "engine": "2445dfc71879265d6c4b51c52ef37ecf86006f4e944d3beab5c57001dbe6c3b7",
         "inputs": [
           {
             "sha256": "05c84ca7fca72deff24822a4de46611ae35b2dfd331aab7ec56f0663d35fd7f1",
@@ -137,7 +137,7 @@
       },
       "mihomo": {
         "config_sha256": "9bf22da0372257d210352129ea8b19a0425c79e6a68be35ddf6f3af0279aaab9",
-        "engine": "27e26d9abb65e3acf98aa127cc5f42d2eba91efc9f94daee3c8a018c4c006122",
+        "engine": "2445dfc71879265d6c4b51c52ef37ecf86006f4e944d3beab5c57001dbe6c3b7",
         "inputs": [
           {
             "sha256": "05c84ca7fca72deff24822a4de46611ae35b2dfd331aab7ec56f0663d35fd7f1",
@@ -170,7 +170,7 @@
     "espn": {
       "loon": {
         "config_sha256": "42daba81cdb37c8dacdc3d66840f18888c8357cf85069c6a0fccf8d12f939e82",
-        "engine": "27e26d9abb65e3acf98aa127cc5f42d2eba91efc9f94daee3c8a018c4c006122",
+        "engine": "2445dfc71879265d6c4b51c52ef37ecf86006f4e944d3beab5c57001dbe6c3b7",
         "inputs": [
           {
             "sha256": "1512b8b80b2177b975ef0b0a13459adeb27dd37d6579b103816185ae33825baa",
@@ -189,7 +189,7 @@
       },
       "mihomo": {
         "config_sha256": "42daba81cdb37c8dacdc3d66840f18888c8357cf85069c6a0fccf8d12f939e82",
-        "engine": "27e26d9abb65e3acf98aa127cc5f42d2eba91efc9f94daee3c8a018c4c006122",
+        "engine": "2445dfc71879265d6c4b51c52ef37ecf86006f4e944d3beab5c57001dbe6c3b7",
         "inputs": [
           {
             "sha256": "1512b8b80b2177b975ef0b0a13459adeb27dd37d6579b103816185ae33825baa",
@@ -230,7 +230,7 @@
     "f1tv": {
       "loon": {
         "config_sha256": "8486a0678d15ee8af9f5aef482d2da4952a14f9dca55e4fab374420f9abc40b8",
-        "engine": "27e26d9abb65e3acf98aa127cc5f42d2eba91efc9f94daee3c8a018c4c006122",
+        "engine": "2445dfc71879265d6c4b51c52ef37ecf86006f4e944d3beab5c57001dbe6c3b7",
         "inputs": [
           {
             "sha256": "71189609d9ab0dfe7b72920719775c11f2336c0c41a8118e2b8edaf8eb5ed36c",
@@ -255,7 +255,7 @@
       },
       "mihomo": {
         "config_sha256": "8486a0678d15ee8af9f5aef482d2da4952a14f9dca55e4fab374420f9abc40b8",
-        "engine": "27e26d9abb65e3acf98aa127cc5f42d2eba91efc9f94daee3c8a018c4c006122",
+        "engine": "2445dfc71879265d6c4b51c52ef37ecf86006f4e944d3beab5c57001dbe6c3b7",
         "inputs": [
           {
             "sha256": "71189609d9ab0dfe7b72920719775c11f2336c0c41a8118e2b8edaf8eb5ed36c",
@@ -282,7 +282,7 @@
     "fakeip-filter": {
       "mihomo": {
         "config_sha256": "3ff4d3dfbad44ac04146146e657613be71b427b198198909ede321af8e202cc1",
-        "engine": "27e26d9abb65e3acf98aa127cc5f42d2eba91efc9f94daee3c8a018c4c006122",
+        "engine": "2445dfc71879265d6c4b51c52ef37ecf86006f4e944d3beab5c57001dbe6c3b7",
         "inputs": [
           {
             "sha256": "92234d0fd12da71a602d1299f258e9c51f2e5c5535998dfa766356ff2d7904f1",
@@ -303,7 +303,7 @@
     "merged_rules": {
       "loon": {
         "config_sha256": "b2268761e7831cda8df8ee162baac4218d343c9875b5a2c7beb3ef4f3550fb0b",
-        "engine": "27e26d9abb65e3acf98aa127cc5f42d2eba91efc9f94daee3c8a018c4c006122",
+        "engine": "2445dfc71879265d6c4b51c52ef37ecf86006f4e944d3beab5c57001dbe6c3b7",
         "inputs": [
           {
             "sha256": "03fdfc75b6d42893dc8636cea8a81e72c559a6f7e3063af5683455f494fd54a1",
@@ -338,7 +338,7 @@
       },
       "mihomo": {
         "config_sha256": "b2268761e7831cda8df8ee162baac4218d343c9875b5a2c7beb3ef4f3550fb0b",
-        "engine": "27e26d9abb65e3acf98aa127cc5f42d2eba91efc9f94daee3c8a018c4c006122",
+        "engine": "2445dfc71879265d6c4b51c52ef37ecf86006f4e944d3beab5c57001dbe6c3b7",
         "inputs": [
           {
             "sha256": "c82fb568f2a215831a8b37c608237eac545d161eb9b1cf90f7018c6c75be97e7",
@@ -405,7 +405,7 @@
     "proxy": {
       "loon": {
         "config_sha256": "a14a8f09134ceaac123be259754bcdb190523002f7150c85393d3ac4736f8f37",
-        "engine": "27e26d9abb65e3acf98aa127cc5f42d2eba91efc9f94daee3c8a018c4c006122",
+        "engine": "2445dfc71879265d6c4b51c52ef37ecf86006f4e944d3beab5c57001dbe6c3b7",
         "inputs": [
           {
             "sha256": "70c7babde180465f220fce280b39265a3cae5b614df892e522eab61d70d551eb",
@@ -419,7 +419,7 @@
       },
       "mihomo": {
         "config_sha256": "a14a8f09134ceaac123be259754bcdb190523002f7150c85393d3ac4736f8f37",
-        "engine": "27e26d9abb65e3acf98aa127cc5f42d2eba91efc9f94daee3c8a018c4c006122",
+        "engine": "2445dfc71879265d6c4b51c52ef37ecf86006f4e944d3beab5c57001dbe6c3b7",
         "inputs": [
           {
             "sha256": "70c7babde180465f220fce280b39265a3cae5b614df892e522eab61d70d551eb",
@@ -447,6 +447,73 @@
           "singbox/proxy_ip.json": "2db6ae8eb9d24cb86924a7020c6f3eebfa41b5fc5848a53e239465db622c2312"
         },
         "rules": 33
+      }
+    },
+    "proxy-merged": {
+      "loon": {
+        "config_sha256": "80e3765ab1c34dc6a04082ffdcd0f57d5318f2504fb954361d68ff0aa4d494af",
+        "engine": "2445dfc71879265d6c4b51c52ef37ecf86006f4e944d3beab5c57001dbe6c3b7",
+        "inputs": [
+          {
+            "sha256": "03fdfc75b6d42893dc8636cea8a81e72c559a6f7e3063af5683455f494fd54a1",
+            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ProxyLite/ProxyLite.list"
+          },
+          {
+            "sha256": "5963ff4f8bd4d3452f95bfdb677c42e03f8d6add2cfbf76ba1638e4c0a776a3c",
+            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Proxy/Proxy.list"
+          },
+          {
+            "sha256": "441b40e8644ebd93fcc1fedd66a8619d7ebef159c340c79f29fbde43686146c5",
+            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Proxy/Proxy_Domain.list"
+          },
+          {
+            "sha256": "f05b506dc2634c9569a346f6e6488ed51be882209036585ef015f52a6fbee0ae",
+            "source": "https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/ruleset/gfw.txt"
+          },
+          {
+            "sha256": "58b12feef7998d92a61da653a0af097bb07268631fafc9647df293d2ec89f71e",
+            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/GlobalMedia/GlobalMedia.list"
+          },
+          {
+            "sha256": "d3dbd1cccc4779176772bf438084586b046c0f2297b035d41b03ad09a46cb4d3",
+            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/GlobalMedia/GlobalMedia_Domain.list"
+          }
+        ],
+        "omitted": {},
+        "outputs": {
+          "lq/generated/proxy-merged.list": "0bcfb1acafbfe3e7a78bc4dd7bd2abb02b6d0acfcf164196c310676a040ee341"
+        },
+        "rules": 9576
+      },
+      "mihomo": {
+        "config_sha256": "80e3765ab1c34dc6a04082ffdcd0f57d5318f2504fb954361d68ff0aa4d494af",
+        "engine": "2445dfc71879265d6c4b51c52ef37ecf86006f4e944d3beab5c57001dbe6c3b7",
+        "inputs": [
+          {
+            "sha256": "c82fb568f2a215831a8b37c608237eac545d161eb9b1cf90f7018c6c75be97e7",
+            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ProxyLite/ProxyLite.list"
+          },
+          {
+            "sha256": "9d64e0fe06a55eea536c999c9a05ef35734772c140bf33d38bbec5a69f361f38",
+            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Proxy/Proxy.list"
+          },
+          {
+            "sha256": "d413f8e23fd9935bc076da0f653a98ef8ba01e366f085d13e8505bd351be362c",
+            "source": "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt"
+          },
+          {
+            "sha256": "92faaf6277d5c868f5ee6fa49e65bf9c8a888f31c5333b499aae21cc2fe34cef",
+            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia.list"
+          }
+        ],
+        "omitted": {},
+        "outputs": {
+          "cat/proxy-merged-classical.yaml": "d7cb937422b350f533a78f482ed290d1f34c3850b9b69ea0ec0c998cd651a2b7",
+          "cat/proxy-merged-domain.yaml": "bdca10cf519a8f8b066c6d016d0a526e8256fe041ee3231d59cc1565452e578a",
+          "cat/proxy-merged-ip.yaml": "d35d1904b91fa0763184941627380c9dedcbcdf1172a6f274d7a23a8b7fcb062",
+          "cat/proxy-merged.yaml": "0800a7db4587c8c7ae0dd67cdff4a43106eea99faa96732f481cffe692e1ee2f"
+        },
+        "rules": 9501
       }
     }
   },
