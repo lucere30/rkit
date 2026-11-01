@@ -78,9 +78,9 @@ class RuleTests(unittest.TestCase):
         self.assertEqual([r.value for r in optimize(rules, collapse_ip=True)], ["192.0.2.0/24", "2001:db8::/32"])
 
     def test_source_ip_collapse_is_independent_from_destination(self):
-        rules = self.parse("SRC-IP-CIDR,192.0.2.0/25\\nSRC-IP-CIDR,192.0.2.128/25\\n"
-                           "IP-CIDR,192.0.2.0/25\\nIP-CIDR,192.0.2.128/25\\n"
-                           "SRC-IP-CIDR,198.51.100.0/24\\nSRC-IP-CIDR,198.51.100.0/25")
+        rules = self.parse("SRC-IP-CIDR,192.0.2.0/25\nSRC-IP-CIDR,192.0.2.128/25\n"
+                           "IP-CIDR,192.0.2.0/25\nIP-CIDR,192.0.2.128/25\n"
+                           "SRC-IP-CIDR,198.51.100.0/24\nSRC-IP-CIDR,198.51.100.0/25")
         optimized = optimize(rules, collapse_ip=True)
         self.assertEqual([(r.kind, r.value) for r in optimized],
                          [("IP-CIDR", "192.0.2.0/24"),
