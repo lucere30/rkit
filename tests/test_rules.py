@@ -90,6 +90,27 @@ class RuleTests(unittest.TestCase):
             with self.subTest(text=text), self.assertRaises(ValueError):
                 parse(text, "clash-classical", "test")
 
+    def test_loon_domain_file_preserves_exact_and_suffix(self):
+        rules = parse(".example.com\nexact.test\n# comment\n", "loon-domain", "loon")
+        self.assertEqual([(r.kind, r.value) for r in rules],
+                         [("DOMAIN-SUFFIX", "example.com"), ("DOMAIN", "exact.test")])
+        with self.assertRaisesRegex(ValueError, "loon:1"):
+            parse("*.invalid.test", "loon-domain", "loon")
+
+    def test_native_mihomo_split_keeps_legacy_and_types(self):
+        rules = self.parse("DOMAIN,x.test\nDOMAIN-SUFFIX,example.com\nDOMAIN-KEYWORD,spot\n"
+                           "IP-CIDR,192.0.2.1/24\nIP-CIDR6,2001:db8::/32\nPROCESS-NAME,program")
+        files, _ = render(rules, "mihomo", "x", layout="native-split")
+        self.assertEqual(set(files), {"cat/x.yaml", "cat/x_domain.yaml",
+                                       "cat/x_ip.yaml", "cat/x_classical.yaml"})
+        self.assertEqual(yaml.safe_load(files["cat/x_domain.yaml"])["payload"],
+                         ["x.test", "+.example.com"])
+        self.assertEqual(yaml.safe_load(files["cat/x_ip.yaml"])["payload"],
+                         ["192.0.2.0/24", "2001:db8::/32"])
+        self.assertEqual(yaml.safe_load(files["cat/x_classical.yaml"])["payload"],
+                         ["DOMAIN-KEYWORD,spot", "PROCESS-NAME,program"])
+        self.assertIn("IP-CIDR,192.0.2.0/24,no-resolve", files["cat/x.yaml"])
+
     def test_split_keeps_other_rules_separate(self):
         rules = self.parse("DOMAIN,x.test\nIP-CIDR,10.0.0.0/8\nUSER-AGENT,Test*")
         files, _ = render(rules, "loon", "x", layout="split")

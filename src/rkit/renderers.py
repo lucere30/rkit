@@ -21,6 +21,8 @@ EXTENSIONS = {"loon": "list", "mihomo": "yaml", "singbox": "json"}
 def planned_paths(target, name, layout="combined", purpose="route"):
     if target == "singbox":
         suffixes = ["_domain", "_ip"]
+    elif target == "mihomo" and layout == "native-split":
+        suffixes = ["", "_domain", "_ip", "_classical"]
     elif layout == "split" and purpose != "fakeip":
         suffixes = ["_domain", "_ip", "_other"]
     else:
@@ -80,6 +82,25 @@ def render_singbox(accepted, name, layout):
     return output
 
 
+def render_mihomo_native(accepted, name):
+    """Publish efficient native providers and retain the legacy classical URL."""
+    files = render_text(accepted, name, "combined", target="mihomo")
+    domain, ip, classical = [], [], []
+    for rule in accepted:
+        if rule.kind == "DOMAIN":
+            domain.append(rule.value)
+        elif rule.kind == "DOMAIN-SUFFIX":
+            domain.append("+." + rule.value)
+        elif rule.kind in {"IP-CIDR", "IP-CIDR6"}:
+            ip.append(rule.value)
+        else:
+            classical.append(classical_line(rule))
+    for suffix, values in (("domain", domain), ("ip", ip), ("classical", classical)):
+        if values:
+            files[f"cat/{name}_{suffix}.yaml"] = yaml_payload(values)
+    return files
+
+
 def render_text(accepted, name, layout, *, target):
     groups = {"": accepted} if layout == "combined" else {
         "_" + group: [r for r in accepted if category(r) == group] for group in ("domain", "ip", "other")
@@ -98,6 +119,6 @@ def render_text(accepted, name, layout, *, target):
 
 RENDERERS = {
     "loon": lambda rules, name, layout: render_text(rules, name, layout, target="loon"),
-    "mihomo": lambda rules, name, layout: render_text(rules, name, layout, target="mihomo"),
+    "mihomo": lambda rules, name, layout: render_mihomo_native(rules, name) if layout == "native-split" else render_text(rules, name, layout, target="mihomo"),
     "singbox": render_singbox,
 }

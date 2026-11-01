@@ -39,3 +39,49 @@ jobs:
       - run: python -m pip install -e .
       - run: python -m unittest discover -s tests -v
       - run: rkit check
+
+  integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e .
+      - name: Build from actual platform upstreams and assert split outputs
+        run: |
+          rkit build --output .rkit-stage || true
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import yaml
+          plan = json.loads(Path(".rkit-stage/plan.json").read_text())
+          report = plan["report"]
+          assert "merged_rules" in report["successful"], report["failed"].get("merged_rules")
+          paths = set(plan["files"])
+          expected = {"lq/generated/merged_rules.list", "cat/merged_rules.yaml",
+                      "cat/merged_rules_domain.yaml", "cat/merged_rules_ip.yaml",
+                      "cat/merged_rules_classical.yaml"}
+          assert expected <= paths, expected - paths
+          root = Path(".rkit-stage/files")
+          loon = (root / "lq/generated/merged_rules.list").read_text()
+          assert "USER-AGENT," in loon, "Loon User-Agent rules were lost"
+          domain = yaml.safe_load((root / "cat/merged_rules_domain.yaml").read_text())["payload"]
+          ip = yaml.safe_load((root / "cat/merged_rules_ip.yaml").read_text())["payload"]
+          classical = yaml.safe_load((root / "cat/merged_rules_classical.yaml").read_text())["payload"]
+          assert domain and ip and classical
+          assert all("," not in value for value in domain + ip)
+          assert all("," in value for value in classical)
+          manifest = json.loads((root / "manifest.json").read_text())["rulesets"]["merged_rules"]
+          loon_sources = [entry["source"] for entry in manifest["loon"]["inputs"]]
+          mihomo_sources = [entry["source"] for entry in manifest["mihomo"]["inputs"]]
+          assert len(loon_sources) == 8 and len(mihomo_sources) == 5
+          assert all("/Loon/" in u or "/surge-rules/" in u for u in loon_sources)
+          assert all("/Clash/" in u or "/clash-rules/" in u for u in mihomo_sources)
+          print("Real upstream separation and Mihomo native split verified.")
+          PY
+      - name: Validate staged providers with pinned Mihomo
+        run: python tools/validate_clients.py .rkit-stage

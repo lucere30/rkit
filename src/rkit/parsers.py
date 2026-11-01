@@ -93,6 +93,25 @@ def domain_list(text, source, *, allow_empty=False):
     return result
 
 
+def loon_domain(text, source, *, allow_empty=False):
+    """Loon Domain lists: leading dot is a suffix; bare hostname is exact."""
+    result = []
+    for number, raw in enumerate(text.lstrip("\ufeff").splitlines(), 1):
+        line = raw.strip()
+        if not line or line.startswith(("#", ";", "//")):
+            continue
+        try:
+            kind = "DOMAIN-SUFFIX" if line.startswith(".") else "DOMAIN"
+            value = line[1:] if kind == "DOMAIN-SUFFIX" else line
+            domain(value)
+            result.append(Rule(kind, value, source, number))
+        except ValueError as error:
+            raise ValueError(f"{source}:{number}: {error}") from error
+    if not result and not allow_empty:
+        raise ValueError(f"{source}: empty ruleset")
+    return result
+
+
 def payload(text, source, parser, **kwargs):
     data = yaml.safe_load(text)
     if (not isinstance(data, dict) or set(data) != {"payload"}
@@ -105,6 +124,7 @@ def payload(text, source, parser, **kwargs):
 PARSERS = {
     "classical": classical,
     "domain-list": domain_list,
+    "loon-domain": loon_domain,
     "clash-classical": lambda text, source, **kw: payload(text, source, classical, **kw),
     "clash-domain": lambda text, source, **kw: payload(text, source, domain_list, **kw),
 }
