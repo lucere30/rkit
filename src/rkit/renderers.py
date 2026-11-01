@@ -8,7 +8,7 @@ from .model import DOMAIN_TYPES, TARGET_IP_TYPES, TEXT_TYPES
 
 CAPABILITIES = {
     "loon": DOMAIN_TYPES | {"IP-CIDR", "IP-CIDR6"} | TEXT_TYPES,
-    "mihomo": DOMAIN_TYPES | TARGET_IP_TYPES | {"SRC-IP-CIDR"},
+    "mihomo": DOMAIN_TYPES | TARGET_IP_TYPES | {"SRC-IP-CIDR", "PROCESS-NAME"},
     "singbox": DOMAIN_TYPES | {"IP-CIDR", "IP-CIDR6", "SRC-IP-CIDR"},
 }
 FIELDS = {"DOMAIN": "domain", "DOMAIN-SUFFIX": "domain_suffix",
