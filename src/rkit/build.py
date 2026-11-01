@@ -189,8 +189,8 @@ def build(root, *, cache_dir=None, offline=False, fetcher=None):
         if failed:
             continue  # A failed migration must not retire the previous subscriptions.
         entries = previous["rulesets"][name]
-        if any(not cfg["targets"][target] for target in entries):
-            continue
+        # An explicitly retired ruleset must remove all its managed outputs,
+        # including artifacts left by globally disabled targets.
         try:
             conditions = {p: check_old(p, sha) for e in entries.values() for p, sha in e["outputs"].items()}
             deletions.update(conditions)
