@@ -5,6 +5,7 @@ import re
 from .model import Rule
 
 PLAIN = re.compile(r"[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\Z")
+SAFE_KEYWORD = re.compile(r"[a-z0-9-]+\Z")
 
 
 def plain(value):
@@ -35,23 +36,28 @@ def exclude(rules, exclusions):
 def optimize(rules, *, collapse_ip=False):
     rules = list(dict.fromkeys(rules))
     suffixes = {r.value for r in rules if r.kind == "DOMAIN-SUFFIX" and plain(r.value)}
+    # Only literal lowercase ASCII keywords are used for conservative coverage.
+    keywords = {r.value for r in rules if r.kind == "DOMAIN-KEYWORD"
+                and SAFE_KEYWORD.fullmatch(r.value)}
     rules = [r for r in rules if not (
         r.kind in {"DOMAIN", "DOMAIN-SUFFIX"} and plain(r.value)
-        and any(parent in suffixes for parent in ancestors(r.value, r.kind == "DOMAIN"))
+        and (any(parent in suffixes for parent in ancestors(
+            r.value, r.kind == "DOMAIN"))
+            or any(keyword in r.value for keyword in keywords))
+    ) and not (
+        r.kind == "DOMAIN-KEYWORD" and r.value in keywords
+        and any(other != r.value and other in r.value for other in keywords)
     )]
     if collapse_ip:
-        # Destination and source address predicates must never be merged together.
-        groups = {("dst", 4): [], ("dst", 6): [], ("src", 4): []}
+        groups = {4: [], 6: []}
         kept = []
         for r in rules:
-            if r.kind in {"IP-CIDR", "IP-CIDR6", "SRC-IP-CIDR"}:
-                network = ipaddress.ip_network(r.value)
-                direction = "src" if r.kind == "SRC-IP-CIDR" else "dst"
-                groups[(direction, network.version)].append(network)
+            if r.kind in {"IP-CIDR", "IP-CIDR6"}:
+                groups[ipaddress.ip_network(r.value).version].append(ipaddress.ip_network(r.value))
             else:
                 kept.append(r)
-        for (direction, version), networks in groups.items():
-            kind = "SRC-IP-CIDR" if direction == "src" else ("IP-CIDR" if version == 4 else "IP-CIDR6")
-            kept.extend(Rule(kind, str(n), "collapsed") for n in ipaddress.collapse_addresses(networks))
+        for version, networks in groups.items():
+            kept.extend(Rule("IP-CIDR" if version == 4 else "IP-CIDR6", str(n), "collapsed")
+                        for n in ipaddress.collapse_addresses(networks))
         rules = kept
     return rules
