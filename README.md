@@ -8,6 +8,7 @@
 |---|---|---|
 | Direct | [list](https://raw.githubusercontent.com/lucere30/rkit/main/lq/manual/direct.list) | [yaml](https://raw.githubusercontent.com/lucere30/rkit/main/cat/direct.yaml) |
 | Proxy | [list](https://raw.githubusercontent.com/lucere30/rkit/main/lq/manual/proxy.list) | [yaml](https://raw.githubusercontent.com/lucere30/rkit/main/cat/proxy.yaml) |
+| Proxy Merged | [list](https://raw.githubusercontent.com/lucere30/rkit/main/lq/generated/proxy-merged.list) | [legacy-compatible Classical](https://raw.githubusercontent.com/lucere30/rkit/main/cat/proxy-merged.yaml), [Domain](https://raw.githubusercontent.com/lucere30/rkit/main/cat/proxy-merged-domain.yaml), [IPCIDR](https://raw.githubusercontent.com/lucere30/rkit/main/cat/proxy-merged-ip.yaml), [Classical](https://raw.githubusercontent.com/lucere30/rkit/main/cat/proxy-merged-classical.yaml) |
 | Merged | [list](https://raw.githubusercontent.com/lucere30/rkit/main/lq/generated/merged_rules.list) | [legacy Classical](https://raw.githubusercontent.com/lucere30/rkit/main/cat/merged_rules.yaml), [Domain](https://raw.githubusercontent.com/lucere30/rkit/main/cat/merged_rules_domain.yaml), [IPCIDR](https://raw.githubusercontent.com/lucere30/rkit/main/cat/merged_rules_ip.yaml), [Classical](https://raw.githubusercontent.com/lucere30/rkit/main/cat/merged_rules_classical.yaml) |
 | ADLite | [list](https://raw.githubusercontent.com/lucere30/rkit/main/lq/generated/adlite.list) | [yaml](https://raw.githubusercontent.com/lucere30/rkit/main/cat/adlite.yaml) |
 | ESPN | [list](https://raw.githubusercontent.com/lucere30/rkit/main/lq/generated/espn.list) | [yaml](https://raw.githubusercontent.com/lucere30/rkit/main/cat/espn.yaml) |
@@ -17,7 +18,7 @@
 Mihomo Fake-IP：[fakeip-filter.yaml](https://raw.githubusercontent.com/lucere30/rkit/main/cat/fakeip-filter.yaml)（`behavior: domain`；其余规则集为 `classical`）。
 
 
-Merged 按客户端独立聚合：Mihomo / sing-box 从 Clash 原生分类和 Loyalsoldier Clash GFW 获取规则；Loon 使用 Loon 原生分类（Proxy 和 GlobalMedia 均读取基础文件与对应 *_Domain.list，ProxyLite 单文件）及 Loyalsoldier Surge GFW。两种客户端均已从 Merged 来源移除 blackmatrix7 Global。构建器对每个客户端独立去重，保留 Loon 的 User-Agent / URL-REGEX。Mihomo 另输出 domain、ipcidr、classical 原生 behavior 的 YAML；IPCIDR 在引用时应添加 `no-resolve`。旧 `cat/merged_rules.yaml` 继续发布，供旧版 Mihomo 配置暂时使用。
+Proxy Merged（旧名 merged_rules，过渡期两个地址并行更新）按客户端独立聚合：Mihomo / sing-box 从 Clash 原生分类和 Loyalsoldier Clash GFW 获取规则；Loon 使用 Loon 原生分类（Proxy 和 GlobalMedia 均读取基础文件与对应 *_Domain.list，ProxyLite 单文件）及 Loyalsoldier Surge GFW。两种客户端均已从 Merged 来源移除 blackmatrix7 Global。构建器对每个客户端独立去重，保留 Loon 的 User-Agent / URL-REGEX。Mihomo 另输出 domain、ipcidr、classical 原生 behavior 的 YAML；IPCIDR 在引用时应添加 `no-resolve`。旧 `cat/merged_rules.yaml` 继续发布，供旧版 Mihomo 配置暂时使用。
 
 配置与上游：[rkit.yaml](rkit.yaml) · 手动规则：`lq/manual/` · 自定义规则：`custom/` · 自动构建：[Actions](../../actions)
 

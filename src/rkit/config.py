@@ -96,7 +96,7 @@ def load(root):
         layouts = spec.get("target_layouts", {})
         keys(layouts, targets)
         for target, layout in layouts.items():
-            if layout not in {"combined", "split", "native-split"} or (layout == "native-split" and target != "mihomo"):
+            if layout not in {"combined", "split", "native-split", "native-split-dash"} or (layout.startswith("native-split") and target != "mihomo"):
                 raise ValueError(f"{name}: invalid layout for {target}")
         if spec.get("purpose", "route") not in {"route", "fakeip"}:
             raise ValueError(f"{name}: invalid purpose")

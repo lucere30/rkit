@@ -66,6 +66,10 @@ jobs:
                       "cat/merged_rules_domain.yaml", "cat/merged_rules_ip.yaml",
                       "cat/merged_rules_classical.yaml"}
           assert expected <= paths, expected - paths
+          new_expected = {"lq/generated/proxy-merged.list", "cat/proxy-merged.yaml",
+                          "cat/proxy-merged-domain.yaml", "cat/proxy-merged-ip.yaml",
+                          "cat/proxy-merged-classical.yaml"}
+          assert new_expected <= paths, new_expected - paths
           root = Path(".rkit-stage/files")
           loon = (root / "lq/generated/merged_rules.list").read_text()
           assert "USER-AGENT," in loon, "Loon User-Agent rules were lost"
@@ -75,7 +79,17 @@ jobs:
           assert domain and ip and classical
           assert all("," not in value for value in domain + ip)
           assert all("," in value for value in classical)
-          manifest = json.loads((root / "manifest.json").read_text())["rulesets"]["merged_rules"]
+          for old_path, new_path in [
+              ("lq/generated/merged_rules.list", "lq/generated/proxy-merged.list"),
+              ("cat/merged_rules.yaml", "cat/proxy-merged.yaml"),
+              ("cat/merged_rules_domain.yaml", "cat/proxy-merged-domain.yaml"),
+              ("cat/merged_rules_ip.yaml", "cat/proxy-merged-ip.yaml"),
+              ("cat/merged_rules_classical.yaml", "cat/proxy-merged-classical.yaml"),
+          ]:
+              assert (root / old_path).read_bytes() == (root / new_path).read_bytes(), (old_path, new_path)
+          manifest_all = json.loads((root / "manifest.json").read_text())["rulesets"]
+          manifest = manifest_all["merged_rules"]
+          assert manifest_all["proxy-merged"]["mihomo"]["rules"] == manifest["mihomo"]["rules"]
           loon_sources = [entry["source"] for entry in manifest["loon"]["inputs"]]
           mihomo_sources = [entry["source"] for entry in manifest["mihomo"]["inputs"]]
           assert len(loon_sources) == 6 and len(mihomo_sources) == 4
