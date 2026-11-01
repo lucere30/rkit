@@ -60,6 +60,46 @@ rulesets:
       singbox:
       - USER-AGENT
       - URL-REGEX
+  # Compatibility output for existing subscriptions; keep during migration.
+  proxy-merged:
+    # Default uses Clash-native sources for Mihomo/sing-box; Loon overrides them.
+    sources:
+    - url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ProxyLite/ProxyLite.list
+      format: classical
+    - url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Proxy/Proxy.list
+      format: classical
+    - url: https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt
+      format: clash-domain
+    - url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia.list
+      format: classical
+    sources_by_target:
+      loon:
+      - url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ProxyLite/ProxyLite.list
+        format: classical
+      - url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Proxy/Proxy.list
+        format: classical
+      - url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Proxy/Proxy_Domain.list
+        format: loon-domain
+      - url: https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/ruleset/gfw.txt
+        format: classical
+      - url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/GlobalMedia/GlobalMedia.list
+        format: classical
+      - url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/GlobalMedia/GlobalMedia_Domain.list
+        format: loon-domain
+    target_layouts:
+      mihomo: native-split-dash
+    targets:
+    - loon
+    - mihomo
+    - singbox
+    collapse_ip: true
+    omit:
+      mihomo:
+      - USER-AGENT
+      - URL-REGEX
+      singbox:
+      - USER-AGENT
+      - URL-REGEX
   adlite:
     sources:
     - url: https://raw.githubusercontent.com/deezertidal/private/refs/heads/main/rule/ADLite.list

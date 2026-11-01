@@ -67,11 +67,11 @@ def validate(stage, cache):
                 if not values:
                     raise ValueError(f"{name}: empty rule provider")
                 stem = Path(name).stem
-                if name.endswith("_domain.yaml"):
+                if name.endswith(("_domain.yaml", "-domain.yaml")):
                     behavior = "domain"
-                elif name.endswith("_ip.yaml"):
+                elif name.endswith(("_ip.yaml", "-ip.yaml")):
                     behavior = "ipcidr"
-                elif name.endswith("_classical.yaml") or any("," in v for v in values):
+                elif name.endswith(("_classical.yaml", "-classical.yaml")) or any("," in v for v in values):
                     behavior = "classical"
                 else:
                     behavior = "domain"
@@ -80,9 +80,9 @@ def validate(stage, cache):
                 destination.write_bytes((files / name).read_bytes())
                 providers[stem] = {"type": "file", "behavior": behavior, "format": "yaml",
                                    "path": str(destination)}
-                if name.endswith("_ip.yaml"):
+                if name.endswith(("_ip.yaml", "-ip.yaml")):
                     route_rules.append(f"RULE-SET,{stem},DIRECT,no-resolve")
-                elif behavior == "domain" and not name.endswith("_domain.yaml"):
+                elif behavior == "domain" and not name.endswith(("_domain.yaml", "-domain.yaml")):
                     filters.append(f"rule-set:{stem}")
                 else:
                     route_rules.append(f"RULE-SET,{stem},DIRECT")

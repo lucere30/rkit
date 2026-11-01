@@ -21,8 +21,9 @@ EXTENSIONS = {"loon": "list", "mihomo": "yaml", "singbox": "json"}
 def planned_paths(target, name, layout="combined", purpose="route"):
     if target == "singbox":
         suffixes = ["_domain", "_ip"]
-    elif target == "mihomo" and layout == "native-split":
-        suffixes = ["", "_domain", "_ip", "_classical"]
+    elif target == "mihomo" and layout in {"native-split", "native-split-dash"}:
+        sep = "-" if layout == "native-split-dash" else "_"
+        suffixes = ["", sep + "domain", sep + "ip", sep + "classical"]
     elif layout == "split" and purpose != "fakeip":
         suffixes = ["_domain", "_ip", "_other"]
     else:
@@ -82,7 +83,7 @@ def render_singbox(accepted, name, layout):
     return output
 
 
-def render_mihomo_native(accepted, name):
+def render_mihomo_native(accepted, name, sep="_"):
     """Publish efficient native providers and retain the legacy classical URL."""
     files = render_text(accepted, name, "combined", target="mihomo")
     domain, ip, classical = [], [], []
@@ -97,7 +98,7 @@ def render_mihomo_native(accepted, name):
             classical.append(classical_line(rule))
     for suffix, values in (("domain", domain), ("ip", ip), ("classical", classical)):
         if values:
-            files[f"cat/{name}_{suffix}.yaml"] = yaml_payload(values)
+            files[f"cat/{name}{sep}{suffix}.yaml"] = yaml_payload(values)
     return files
 
 
@@ -119,6 +120,6 @@ def render_text(accepted, name, layout, *, target):
 
 RENDERERS = {
     "loon": lambda rules, name, layout: render_text(rules, name, layout, target="loon"),
-    "mihomo": lambda rules, name, layout: render_mihomo_native(rules, name) if layout == "native-split" else render_text(rules, name, layout, target="mihomo"),
+    "mihomo": lambda rules, name, layout: render_mihomo_native(rules, name, sep="-" if layout == "native-split-dash" else "_") if layout in {"native-split", "native-split-dash"} else render_text(rules, name, layout, target="mihomo"),
     "singbox": render_singbox,
 }

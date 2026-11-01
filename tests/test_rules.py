@@ -111,6 +111,17 @@ class RuleTests(unittest.TestCase):
                          ["DOMAIN-KEYWORD,spot", "PROCESS-NAME,program"])
         self.assertIn("IP-CIDR,192.0.2.0/24,no-resolve", files["cat/x.yaml"])
 
+    def test_native_split_dash_uses_hyphenated_filenames_without_semantic_changes(self):
+        rules = self.parse("DOMAIN,x.test\nDOMAIN-SUFFIX,example.com\nDOMAIN-KEYWORD,spot\nIP-CIDR,192.0.2.0/24")
+        old, _ = render(rules, "mihomo", "proxy-merged", layout="native-split")
+        new, _ = render(rules, "mihomo", "proxy-merged", layout="native-split-dash")
+        self.assertEqual(set(new), {"cat/proxy-merged.yaml", "cat/proxy-merged-domain.yaml",
+                                     "cat/proxy-merged-ip.yaml", "cat/proxy-merged-classical.yaml"})
+        self.assertEqual(new["cat/proxy-merged.yaml"], old["cat/proxy-merged.yaml"])
+        for segment in ("domain", "ip", "classical"):
+            self.assertEqual(new[f"cat/proxy-merged-{segment}.yaml"],
+                             old[f"cat/proxy-merged_{segment}.yaml"])
+
     def test_split_keeps_other_rules_separate(self):
         rules = self.parse("DOMAIN,x.test\nIP-CIDR,10.0.0.0/8\nUSER-AGENT,Test*")
         files, _ = render(rules, "loon", "x", layout="split")
