@@ -220,6 +220,55 @@ class PipelineTests(Project):
         self.data = b"# nothing\n"
         self.assertIn("x", self.run_build()["report"]["failed"])
 
+    def test_target_specific_sources_preserve_client_semantics(self):
+        spec = self.cfg["rulesets"]["x"]
+        spec["sources_by_target"] = {"loon": [
+            {"url": "https://example.test/loon", "format": "classical"},
+            {"url": "https://example.test/loon-domain", "format": "loon-domain"}]}
+        spec["target_layouts"] = {"mihomo": "native-split"}
+        self.save()
+        feeds = {
+            "https://example.test/x": b"DOMAIN-SUFFIX,clash.test\nDOMAIN-KEYWORD,keyword\nIP-CIDR,192.0.2.0/24\n",
+            "https://example.test/loon": b"USER-AGENT,LoonAgent*\nDOMAIN-KEYWORD,keyword\n",
+            "https://example.test/loon-domain": b".loon.test\nexact.loon.test\n",
+        }
+        calls = []
+        def fetch(url):
+            calls.append(url)
+            return feeds[url]
+        result = self.run_build(fetch)
+        self.assertFalse(result["report"]["failed"])
+        self.assertEqual(len(calls), 3)
+        loon = result["outputs"]["lq/generated/x.list"]
+        self.assertIn("DOMAIN-SUFFIX,loon.test", loon)
+        self.assertIn("USER-AGENT,LoonAgent*", loon)
+        self.assertNotIn("clash.test", loon)
+        self.assertIn("DOMAIN-SUFFIX,clash.test", result["outputs"]["cat/x.yaml"])
+        self.assertEqual(yaml.safe_load(result["outputs"]["cat/x_domain.yaml"])["payload"],
+                         ["+.clash.test"])
+        self.assertEqual(yaml.safe_load(result["outputs"]["cat/x_ip.yaml"])["payload"],
+                         ["192.0.2.0/24"])
+        self.assertEqual(yaml.safe_load(result["outputs"]["cat/x_classical.yaml"])["payload"],
+                         ["DOMAIN-KEYWORD,keyword"])
+        manifest = json.loads(result["outputs"]["manifest.json"])["rulesets"]["x"]
+        self.assertEqual(len(manifest["loon"]["inputs"]), 2)
+        self.assertEqual(len(manifest["mihomo"]["inputs"]), 1)
+        self.assertEqual(len(manifest["singbox"]["inputs"]), 1)
+        self.accept(result)
+        self.assertEqual(self.run_build(fetch)["outputs"]["cat/x_domain.yaml"],
+                         result["outputs"]["cat/x_domain.yaml"])
+
+    def test_invalid_target_override_is_rejected(self):
+        self.cfg["rulesets"]["x"]["sources_by_target"] = {"unknown": []}
+        self.save()
+        with self.assertRaises(ValueError):
+            load(self.root)
+        self.cfg["rulesets"]["x"]["sources_by_target"] = {}
+        self.cfg["rulesets"]["x"]["target_layouts"] = {"loon": "native-split"}
+        self.save()
+        with self.assertRaisesRegex(ValueError, "invalid layout"):
+            load(self.root)
+
     def test_shared_url_downloaded_once(self):
         self.cfg["rulesets"]["y"] = deepcopy(self.cfg["rulesets"]["x"])
         self.save()
