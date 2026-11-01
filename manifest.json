@@ -3,10 +3,10 @@
     "adlite": {
       "loon": {
         "config_sha256": "a79a8ed7c506f260765fe93b7eedea1482f54a4a9e5e3ceeef104dbea59b4c52",
-        "engine": "7bee1719df034796ea3b4cbabbe083b109a5b5f9c12c01410a1aaeb6bd9a10e8",
+        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
         "inputs": [
           {
-            "sha256": "12c9c05d62d6509ec7a673df679b8fc6a809fa45bd1edbda43059f8c351f8690",
+            "sha256": "34c385ca1ab6d451af1e1f5e83bd0b5fd0c073aaf6269c76c3bb424fe5714b1b",
             "source": "https://raw.githubusercontent.com/deezertidal/private/refs/heads/main/rule/ADLite.list"
           }
         ],
@@ -18,10 +18,10 @@
       },
       "mihomo": {
         "config_sha256": "a79a8ed7c506f260765fe93b7eedea1482f54a4a9e5e3ceeef104dbea59b4c52",
-        "engine": "7bee1719df034796ea3b4cbabbe083b109a5b5f9c12c01410a1aaeb6bd9a10e8",
+        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
         "inputs": [
           {
-            "sha256": "12c9c05d62d6509ec7a673df679b8fc6a809fa45bd1edbda43059f8c351f8690",
+            "sha256": "34c385ca1ab6d451af1e1f5e83bd0b5fd0c073aaf6269c76c3bb424fe5714b1b",
             "source": "https://raw.githubusercontent.com/deezertidal/private/refs/heads/main/rule/ADLite.list"
           }
         ],
@@ -51,7 +51,7 @@
     "bitget": {
       "loon": {
         "config_sha256": "0d5e43576cdde2b5317fa02f5aca2d23596f134bc45fc20c4d7d44dde5b3c951",
-        "engine": "7bee1719df034796ea3b4cbabbe083b109a5b5f9c12c01410a1aaeb6bd9a10e8",
+        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
         "inputs": [
           {
             "sha256": "dc583a63b81a8ff203a64155fbfb7111e6bcd4476aa615141bbb2e58d5643cca",
@@ -74,7 +74,7 @@
       },
       "mihomo": {
         "config_sha256": "0d5e43576cdde2b5317fa02f5aca2d23596f134bc45fc20c4d7d44dde5b3c951",
-        "engine": "7bee1719df034796ea3b4cbabbe083b109a5b5f9c12c01410a1aaeb6bd9a10e8",
+        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
         "inputs": [
           {
             "sha256": "dc583a63b81a8ff203a64155fbfb7111e6bcd4476aa615141bbb2e58d5643cca",
@@ -123,7 +123,7 @@
     "direct": {
       "loon": {
         "config_sha256": "9bf22da0372257d210352129ea8b19a0425c79e6a68be35ddf6f3af0279aaab9",
-        "engine": "7bee1719df034796ea3b4cbabbe083b109a5b5f9c12c01410a1aaeb6bd9a10e8",
+        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
         "inputs": [
           {
             "sha256": "05c84ca7fca72deff24822a4de46611ae35b2dfd331aab7ec56f0663d35fd7f1",
@@ -137,7 +137,7 @@
       },
       "mihomo": {
         "config_sha256": "9bf22da0372257d210352129ea8b19a0425c79e6a68be35ddf6f3af0279aaab9",
-        "engine": "7bee1719df034796ea3b4cbabbe083b109a5b5f9c12c01410a1aaeb6bd9a10e8",
+        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
         "inputs": [
           {
             "sha256": "05c84ca7fca72deff24822a4de46611ae35b2dfd331aab7ec56f0663d35fd7f1",
@@ -170,7 +170,7 @@
     "espn": {
       "loon": {
         "config_sha256": "42daba81cdb37c8dacdc3d66840f18888c8357cf85069c6a0fccf8d12f939e82",
-        "engine": "7bee1719df034796ea3b4cbabbe083b109a5b5f9c12c01410a1aaeb6bd9a10e8",
+        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
         "inputs": [
           {
             "sha256": "1512b8b80b2177b975ef0b0a13459adeb27dd37d6579b103816185ae33825baa",
@@ -189,7 +189,7 @@
       },
       "mihomo": {
         "config_sha256": "42daba81cdb37c8dacdc3d66840f18888c8357cf85069c6a0fccf8d12f939e82",
-        "engine": "7bee1719df034796ea3b4cbabbe083b109a5b5f9c12c01410a1aaeb6bd9a10e8",
+        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
         "inputs": [
           {
             "sha256": "1512b8b80b2177b975ef0b0a13459adeb27dd37d6579b103816185ae33825baa",
@@ -230,7 +230,7 @@
     "f1tv": {
       "loon": {
         "config_sha256": "8486a0678d15ee8af9f5aef482d2da4952a14f9dca55e4fab374420f9abc40b8",
-        "engine": "7bee1719df034796ea3b4cbabbe083b109a5b5f9c12c01410a1aaeb6bd9a10e8",
+        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
         "inputs": [
           {
             "sha256": "71189609d9ab0dfe7b72920719775c11f2336c0c41a8118e2b8edaf8eb5ed36c",
@@ -255,7 +255,7 @@
       },
       "mihomo": {
         "config_sha256": "8486a0678d15ee8af9f5aef482d2da4952a14f9dca55e4fab374420f9abc40b8",
-        "engine": "7bee1719df034796ea3b4cbabbe083b109a5b5f9c12c01410a1aaeb6bd9a10e8",
+        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
         "inputs": [
           {
             "sha256": "71189609d9ab0dfe7b72920719775c11f2336c0c41a8118e2b8edaf8eb5ed36c",
@@ -282,7 +282,7 @@
     "fakeip-filter": {
       "mihomo": {
         "config_sha256": "3ff4d3dfbad44ac04146146e657613be71b427b198198909ede321af8e202cc1",
-        "engine": "7bee1719df034796ea3b4cbabbe083b109a5b5f9c12c01410a1aaeb6bd9a10e8",
+        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
         "inputs": [
           {
             "sha256": "92234d0fd12da71a602d1299f258e9c51f2e5c5535998dfa766356ff2d7904f1",
@@ -303,7 +303,7 @@
     "merged_rules": {
       "loon": {
         "config_sha256": "596cd9d3621aab4de6f31fb39957b14ec8515052071359ac38aea4817af93b44",
-        "engine": "7bee1719df034796ea3b4cbabbe083b109a5b5f9c12c01410a1aaeb6bd9a10e8",
+        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
         "inputs": [
           {
             "sha256": "03fdfc75b6d42893dc8636cea8a81e72c559a6f7e3063af5683455f494fd54a1",
@@ -334,7 +334,7 @@
       },
       "mihomo": {
         "config_sha256": "596cd9d3621aab4de6f31fb39957b14ec8515052071359ac38aea4817af93b44",
-        "engine": "7bee1719df034796ea3b4cbabbe083b109a5b5f9c12c01410a1aaeb6bd9a10e8",
+        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
         "inputs": [
           {
             "sha256": "03fdfc75b6d42893dc8636cea8a81e72c559a6f7e3063af5683455f494fd54a1",
@@ -405,7 +405,7 @@
     "proxy": {
       "loon": {
         "config_sha256": "a14a8f09134ceaac123be259754bcdb190523002f7150c85393d3ac4736f8f37",
-        "engine": "7bee1719df034796ea3b4cbabbe083b109a5b5f9c12c01410a1aaeb6bd9a10e8",
+        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
         "inputs": [
           {
             "sha256": "70c7babde180465f220fce280b39265a3cae5b614df892e522eab61d70d551eb",
@@ -419,7 +419,7 @@
       },
       "mihomo": {
         "config_sha256": "a14a8f09134ceaac123be259754bcdb190523002f7150c85393d3ac4736f8f37",
-        "engine": "7bee1719df034796ea3b4cbabbe083b109a5b5f9c12c01410a1aaeb6bd9a10e8",
+        "engine": "892d425d50f36c912595d884f9dfc8e65ede0df9b56def369eed656b220fe6b4",
         "inputs": [
           {
             "sha256": "70c7babde180465f220fce280b39265a3cae5b614df892e522eab61d70d551eb",
