@@ -84,7 +84,10 @@ def optimize(rules, *, collapse_ip=False):
     suffixes = {rule.value for rule in rules
                 if rule.kind == "DOMAIN-SUFFIX" and plain(rule.value)}
     keywords = _keyword_coverage(rules)
-    eligible_keywords = {rule.value for rule in rules\n                         if rule.kind == "DOMAIN-KEYWORD"\n                         and SAFE_KEYWORD.fullmatch(rule.value)}\n    optimized = [
+    eligible_keywords = {rule.value for rule in rules
+                         if rule.kind == "DOMAIN-KEYWORD"
+                         and SAFE_KEYWORD.fullmatch(rule.value)}
+    optimized = [
         rule for rule in rules
         if not (rule.kind in {"DOMAIN", "DOMAIN-SUFFIX"}
                 and _domain_covered(rule, suffixes, keywords))
