@@ -43,7 +43,7 @@ def _keyword_coverage(rules):
     for keyword in sorted(keywords, key=lambda value: (len(value), value)):
         if not any(shorter in keyword for shorter in minimal):
             minimal.append(keyword)
-    return minimal
+    return keywords, minimal
 
 
 def _domain_covered(rule, suffixes, keywords):
@@ -83,10 +83,7 @@ def optimize(rules, *, collapse_ip=False):
     rules = list(dict.fromkeys(rules))
     suffixes = {rule.value for rule in rules
                 if rule.kind == "DOMAIN-SUFFIX" and plain(rule.value)}
-    keywords = _keyword_coverage(rules)
-    eligible_keywords = {rule.value for rule in rules
-                         if rule.kind == "DOMAIN-KEYWORD"
-                         and SAFE_KEYWORD.fullmatch(rule.value)}
+    eligible_keywords, keywords = _keyword_coverage(rules)
     optimized = [
         rule for rule in rules
         if not (rule.kind in {"DOMAIN", "DOMAIN-SUFFIX"}
