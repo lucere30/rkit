@@ -119,6 +119,6 @@ def render_text(accepted, name, layout, *, target):
 
 RENDERERS = {
     "loon": lambda rules, name, layout: render_text(rules, name, layout, target="loon"),
-    "mihomo": lambda rules, name, layout: (render_mihomo_native(rules, name), []) if layout == "native-split" else render_text(rules, name, layout, target="mihomo"),
+    "mihomo": lambda rules, name, layout: render_mihomo_native(rules, name) if layout == "native-split" else render_text(rules, name, layout, target="mihomo"),
     "singbox": render_singbox,
 }
