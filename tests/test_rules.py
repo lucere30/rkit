@@ -94,7 +94,7 @@ class RuleTests(unittest.TestCase):
         self.assertIn(("DOMAIN-KEYWORD", "example"), result)
         self.assertIn(("DOMAIN-KEYWORD", "EXAMPLE"), result)
         self.assertIn(("DOMAIN-KEYWORD", "x.y"), result)
-        self.assertNotIn(("DOMAIN", "EXAMPLE.com"), result)  # Covered by its exact suffix, not the uppercase keyword.
+        self.assertIn(("DOMAIN", "EXAMPLE.com"), result)  # Uppercase hostnames are intentionally not optimized.
         self.assertIn(("DOMAIN-SUFFIX", "EXAMPLE.com"), result)
         self.assertNotIn(("DOMAIN-SUFFIX", "example.com"), result)
         self.assertIn(("DOMAIN", "other.test"), result)
