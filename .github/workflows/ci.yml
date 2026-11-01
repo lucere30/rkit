@@ -60,36 +60,25 @@ jobs:
           import yaml
           plan = json.loads(Path(".rkit-stage/plan.json").read_text())
           report = plan["report"]
-          assert "merged_rules" in report["successful"], report["failed"].get("merged_rules")
+          assert "proxy-merged" in report["successful"], report["failed"].get("proxy-merged")
           paths = set(plan["files"])
-          expected = {"lq/generated/merged_rules.list", "cat/merged_rules.yaml",
-                      "cat/merged_rules_domain.yaml", "cat/merged_rules_ip.yaml",
-                      "cat/merged_rules_classical.yaml"}
+          expected = {"lq/generated/proxy-merged.list", "cat/proxy-merged.yaml",
+                      "cat/proxy-merged-domain.yaml", "cat/proxy-merged-ip.yaml",
+                      "cat/proxy-merged-classical.yaml"}
           assert expected <= paths, expected - paths
-          new_expected = {"lq/generated/proxy-merged.list", "cat/proxy-merged.yaml",
-                          "cat/proxy-merged-domain.yaml", "cat/proxy-merged-ip.yaml",
-                          "cat/proxy-merged-classical.yaml"}
-          assert new_expected <= paths, new_expected - paths
+          assert not any("merged_rules" in p for p in paths)
           root = Path(".rkit-stage/files")
-          loon = (root / "lq/generated/merged_rules.list").read_text()
+          loon = (root / "lq/generated/proxy-merged.list").read_text()
           assert "USER-AGENT," in loon, "Loon User-Agent rules were lost"
-          domain = yaml.safe_load((root / "cat/merged_rules_domain.yaml").read_text())["payload"]
-          ip = yaml.safe_load((root / "cat/merged_rules_ip.yaml").read_text())["payload"]
-          classical = yaml.safe_load((root / "cat/merged_rules_classical.yaml").read_text())["payload"]
+          domain = yaml.safe_load((root / "cat/proxy-merged-domain.yaml").read_text())["payload"]
+          ip = yaml.safe_load((root / "cat/proxy-merged-ip.yaml").read_text())["payload"]
+          classical = yaml.safe_load((root / "cat/proxy-merged-classical.yaml").read_text())["payload"]
           assert domain and ip and classical
           assert all("," not in value for value in domain + ip)
           assert all("," in value for value in classical)
-          for old_path, new_path in [
-              ("lq/generated/merged_rules.list", "lq/generated/proxy-merged.list"),
-              ("cat/merged_rules.yaml", "cat/proxy-merged.yaml"),
-              ("cat/merged_rules_domain.yaml", "cat/proxy-merged-domain.yaml"),
-              ("cat/merged_rules_ip.yaml", "cat/proxy-merged-ip.yaml"),
-              ("cat/merged_rules_classical.yaml", "cat/proxy-merged-classical.yaml"),
-          ]:
-              assert (root / old_path).read_bytes() == (root / new_path).read_bytes(), (old_path, new_path)
           manifest_all = json.loads((root / "manifest.json").read_text())["rulesets"]
-          manifest = manifest_all["merged_rules"]
-          assert manifest_all["proxy-merged"]["mihomo"]["rules"] == manifest["mihomo"]["rules"]
+          assert "merged_rules" not in manifest_all
+          manifest = manifest_all["proxy-merged"]
           loon_sources = [entry["source"] for entry in manifest["loon"]["inputs"]]
           mihomo_sources = [entry["source"] for entry in manifest["mihomo"]["inputs"]]
           assert len(loon_sources) == 6 and len(mihomo_sources) == 4
