@@ -106,8 +106,14 @@ jobs:
               removed, added = sorted(a - b), sorted(b - a)
               if removed or added:
                   print(f"{old}: baseline={len(a)} new={len(b)} removed={len(removed)} added={len(added)}")
-                  print(" removed types:", dict(Counter(v.split(",", 1)[0] for v in removed)))
-                  print(" added types:", dict(Counter(v.split(",", 1)[0] for v in added)))
+                  def rule_type(value):
+                      if value.startswith("+."):
+                          return "DOMAIN-SUFFIX"
+                      if "," not in value:
+                          return "DOMAIN"
+                      return value.split(",", 1)[0]
+                  print(" removed types:", dict(Counter(rule_type(v) for v in removed)))
+                  print(" added types:", dict(Counter(rule_type(v) for v in added)))
                   print(" removed sample:", removed[:12])
                   print(" added sample:", added[:12])
           PY
