@@ -78,7 +78,8 @@ jobs:
           manifest = json.loads((root / "manifest.json").read_text())["rulesets"]["merged_rules"]
           loon_sources = [entry["source"] for entry in manifest["loon"]["inputs"]]
           mihomo_sources = [entry["source"] for entry in manifest["mihomo"]["inputs"]]
-          assert len(loon_sources) == 8 and len(mihomo_sources) == 5
+          assert len(loon_sources) == 6 and len(mihomo_sources) == 4
+          assert not any("/Loon/Global/" in u or "/Clash/Global/" in u for u in loon_sources + mihomo_sources)
           assert all("/Loon/" in u or "/surge-rules/" in u for u in loon_sources)
           assert all("/Clash/" in u or "/clash-rules/" in u for u in mihomo_sources)
           print("Real upstream separation and Mihomo native split verified.")
