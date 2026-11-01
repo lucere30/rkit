@@ -87,5 +87,35 @@ jobs:
           assert all("/Clash/" in u or "/clash-rules/" in u for u in mihomo_sources)
           print("Real upstream separation and Mihomo native split verified.")
           PY
+      - name: Report real-upstream optimization delta
+        run: |
+          python - <<'PY'
+          from collections import Counter
+          from pathlib import Path
+          import yaml
+          for old in sorted(Path("cat").glob("*.yaml")) + sorted(Path("lq/generated").glob("*.list")):
+              new = Path(".rkit-stage/files") / old
+              if not new.exists():
+                  continue
+              if old.suffix == ".yaml":
+                  a = set(yaml.safe_load(old.read_text())["payload"])
+                  b = set(yaml.safe_load(new.read_text())["payload"])
+              else:
+                  a = {line for line in old.read_text().splitlines() if line and not line.startswith("#")}
+                  b = {line for line in new.read_text().splitlines() if line and not line.startswith("#")}
+              removed, added = sorted(a - b), sorted(b - a)
+              if removed or added:
+                  print(f"{old}: baseline={len(a)} new={len(b)} removed={len(removed)} added={len(added)}")
+                  def rule_type(value):
+                      if value.startswith("+."):
+                          return "DOMAIN-SUFFIX"
+                      if "," not in value:
+                          return "DOMAIN"
+                      return value.split(",", 1)[0]
+                  print(" removed types:", dict(Counter(rule_type(v) for v in removed)))
+                  print(" added types:", dict(Counter(rule_type(v) for v in added)))
+                  print(" removed sample:", removed[:12])
+                  print(" added sample:", added[:12])
+          PY
       - name: Validate staged providers with pinned Mihomo
         run: python tools/validate_clients.py .rkit-stage

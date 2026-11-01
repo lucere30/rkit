@@ -1,4 +1,6 @@
 import json
+import ipaddress
+import random
 import unittest
 
 import yaml
@@ -76,6 +78,129 @@ class RuleTests(unittest.TestCase):
     def test_ip_collapse_exact_union(self):
         rules = self.parse("IP-CIDR,192.0.2.0/25\nIP-CIDR,192.0.2.128/25\nIP-CIDR6,2001:db8::/33\nIP-CIDR6,2001:db8:8000::/33")
         self.assertEqual([r.value for r in optimize(rules, collapse_ip=True)], ["192.0.2.0/24", "2001:db8::/32"])
+
+    def test_keyword_covers_exact_suffix_and_longer_keyword(self):
+        rules = self.parse("DOMAIN-KEYWORD,google\nDOMAIN,google.com\n"
+                           "DOMAIN-SUFFIX,google.com\nDOMAIN-SUFFIX,api.google.com\n"
+                           "DOMAIN,notgoogle.com\nDOMAIN-KEYWORD,googleservices\n"
+                           "DOMAIN,unrelated.example")
+        self.assertEqual([(r.kind, r.value) for r in optimize(rules)],
+                         [("DOMAIN-KEYWORD", "google"), ("DOMAIN", "unrelated.example")])
+
+    def test_keyword_coverage_is_one_way_and_case_conservative(self):
+        rules = self.parse("DOMAIN-SUFFIX,example.com\nDOMAIN-KEYWORD,example\n"
+                           "DOMAIN-KEYWORD,EXAMPLE\nDOMAIN,EXAMPLE.com\n"
+                           "DOMAIN-SUFFIX,EXAMPLE.com\nDOMAIN-KEYWORD,x.y\n"
+                           "DOMAIN,x.y.example\nDOMAIN,other.test")
+        result = [(r.kind, r.value) for r in optimize(rules)]
+        self.assertIn(("DOMAIN-KEYWORD", "example"), result)
+        self.assertIn(("DOMAIN-KEYWORD", "EXAMPLE"), result)
+        self.assertIn(("DOMAIN-KEYWORD", "x.y"), result)
+        self.assertIn(("DOMAIN", "EXAMPLE.com"), result)  # Uppercase hostnames are intentionally not optimized.
+        self.assertIn(("DOMAIN-SUFFIX", "EXAMPLE.com"), result)
+        self.assertNotIn(("DOMAIN-SUFFIX", "example.com"), result)
+        self.assertIn(("DOMAIN", "other.test"), result)
+
+    def test_keyword_does_not_collapse_source_ip_cidrs(self):
+        rules = self.parse("DOMAIN-KEYWORD,foo\nDOMAIN-KEYWORD,foo*\n"
+                           "SRC-IP-CIDR,192.0.2.0/25\nSRC-IP-CIDR,192.0.2.128/25\n"
+                           "IP-CIDR,192.0.2.0/25\nIP-CIDR,192.0.2.128/25")
+        result = optimize(rules, collapse_ip=True)
+        self.assertIn(("DOMAIN-KEYWORD", "foo*"), [(r.kind, r.value) for r in result])
+        self.assertEqual([r.value for r in result if r.kind == "SRC-IP-CIDR"],
+                         ["192.0.2.0/25", "192.0.2.128/25"])
+        self.assertEqual([r.value for r in result if r.kind == "IP-CIDR"],
+                         ["192.0.2.0/24"])
+
+    def test_optimization_idempotence(self):
+        rules = self.parse("DOMAIN-SUFFIX,example.com\nDOMAIN-SUFFIX,a.example.com\n"
+                           "DOMAIN,sub.example.com\nDOMAIN-KEYWORD,foo\n"
+                           "DOMAIN-SUFFIX,foo.test\nDOMAIN,foo.test\n"
+                           "IP-CIDR,192.0.2.0/25\nIP-CIDR,192.0.2.128/25\n"
+                           "IP-CIDR6,2001:db8::/33\nIP-CIDR6,2001:db8:8000::/33")
+        once = optimize(rules, collapse_ip=True)
+        twice = optimize(once, collapse_ip=True)
+        self.assertEqual([(r.kind, r.value) for r in once],
+                         [(r.kind, r.value) for r in twice])
+        self.assertEqual([r.value for r in once if r.kind == "IP-CIDR6"],
+                         ["2001:db8::/32"])
+
+    def test_keyword_minimization_preserves_ineligible_patterns(self):
+        rules = self.parse("DOMAIN-KEYWORD,abc\nDOMAIN-KEYWORD,xabc\n"
+                           "DOMAIN-KEYWORD,abcx\nDOMAIN-KEYWORD,ab\n"
+                           "DOMAIN-KEYWORD,ABC\nDOMAIN-KEYWORD,abc*\n"
+                           "DOMAIN-SUFFIX,abc.test\nDOMAIN,notabc.test\n"
+                           "DOMAIN-SUFFIX,notabc.test\nDOMAIN,notab.test")
+        result = {(rule.kind, rule.value) for rule in optimize(rules)}
+        self.assertIn(("DOMAIN-KEYWORD", "ab"), result)
+        self.assertIn(("DOMAIN-KEYWORD", "ABC"), result)
+        self.assertIn(("DOMAIN-KEYWORD", "abc*"), result)
+        self.assertNotIn(("DOMAIN-KEYWORD", "abc"), result)
+        self.assertNotIn(("DOMAIN-KEYWORD", "xabc"), result)
+        self.assertNotIn(("DOMAIN-KEYWORD", "abcx"), result)
+        self.assertNotIn(("DOMAIN-SUFFIX", "abc.test"), result)
+        self.assertNotIn(("DOMAIN-SUFFIX", "notabc.test"), result)
+        self.assertNotIn(("DOMAIN", "notab.test"), result)
+
+    def test_suffix_boundary_does_not_use_raw_substrings(self):
+        rules = self.parse("DOMAIN-SUFFIX,example.com\n"
+                           "DOMAIN-SUFFIX,notexample.com\n"
+                           "DOMAIN,notexample.com\n"
+                           "DOMAIN,a.example.com\n"
+                           "DOMAIN,example.com.evil\n"
+                           "DOMAIN-SUFFIX,example.com.evil")
+        result = {(rule.kind, rule.value) for rule in optimize(rules)}
+        self.assertIn(("DOMAIN-SUFFIX", "example.com"), result)
+        self.assertIn(("DOMAIN-SUFFIX", "notexample.com"), result)
+        self.assertIn(("DOMAIN-SUFFIX", "example.com.evil"), result)
+        self.assertNotIn(("DOMAIN", "a.example.com"), result)
+        self.assertNotIn(("DOMAIN", "notexample.com"), result)
+        self.assertNotIn(("DOMAIN", "example.com.evil"), result)
+
+    def test_randomized_domain_matching_equivalence(self):
+        rng = random.Random(20261101)
+        labels = ["foo", "bar", "google", "x", "example", "notgoogle"]
+        for _ in range(100):
+            rules = self.parse("\n".join(
+                f"{rng.choice(['DOMAIN', 'DOMAIN-SUFFIX', 'DOMAIN-KEYWORD'])},"
+                f"{rng.choice(labels)}.{rng.choice(['com', 'test'])}"
+                for _ in range(35)))
+            optimized = optimize(rules)
+            hosts = [f"{rng.choice(labels)}.{rng.choice(labels)}.{rng.choice(['com', 'test'])}"
+                     for _ in range(80)]
+            hosts += [f"{rng.choice(labels)}.{rng.choice(['com', 'test'])}"
+                      for _ in range(80)]
+            def matches(rule, host):
+                if rule.kind == "DOMAIN":
+                    return rule.value == host
+                if rule.kind == "DOMAIN-SUFFIX":
+                    return host == rule.value or host.endswith("." + rule.value)
+                return rule.value in host
+            for host in hosts:
+                self.assertEqual(any(matches(rule, host) for rule in rules),
+                                 any(matches(rule, host) for rule in optimized),
+                                 host)
+            self.assertEqual([(r.kind, r.value) for r in optimized],
+                             [(r.kind, r.value) for r in optimize(optimized)])
+
+    def test_randomized_destination_ip_union_equivalence(self):
+        rng = random.Random(20261101)
+        for version in (4, 6):
+            base = ipaddress.ip_network("198.51.100.0/24" if version == 4
+                                        else "2001:db8::/120")
+            for _ in range(30):
+                networks = [rng.choice(list(base.subnets(new_prefix=base.prefixlen + 4)))
+                            for _ in range(15)]
+                kind = "IP-CIDR" if version == 4 else "IP-CIDR6"
+                rules = self.parse("\n".join(f"{kind},{network}" for network in networks))
+                result = optimize(rules, collapse_ip=True)
+                for address in base.hosts():
+                    self.assertEqual(any(address in network for network in networks),
+                                     any(address in ipaddress.ip_network(rule.value)
+                                         for rule in result))
+                self.assertEqual([(r.kind, r.value) for r in result],
+                                 [(r.kind, r.value)
+                                  for r in optimize(result, collapse_ip=True)])
 
     def test_fakeip_wildcards_are_not_suffixes(self):
         rules = parse("+.example.com\na.example.com\n*.other.example\nexact.test", "domain-list", "test")
