@@ -87,5 +87,25 @@ jobs:
           assert all("/Clash/" in u or "/clash-rules/" in u for u in mihomo_sources)
           print("Real upstream separation and Mihomo native split verified.")
           PY
+      - name: Report real-upstream optimization delta
+        run: |
+          python - <<'PY'
+          from collections import Counter
+          from pathlib import Path
+          import yaml
+          for old in sorted(Path("cat").glob("*.yaml")):
+              new = Path(".rkit-stage/files") / old
+              if not new.exists():
+                  continue
+              a = set(yaml.safe_load(old.read_text())["payload"])
+              b = set(yaml.safe_load(new.read_text())["payload"])
+              removed, added = sorted(a - b), sorted(b - a)
+              if removed or added:
+                  print(f"{old}: baseline={len(a)} new={len(b)} removed={len(removed)} added={len(added)}")
+                  print(" removed types:", dict(Counter(v.split(",", 1)[0] for v in removed)))
+                  print(" added types:", dict(Counter(v.split(",", 1)[0] for v in added)))
+                  print(" removed sample:", removed[:12])
+                  print(" added sample:", added[:12])
+          PY
       - name: Validate staged providers with pinned Mihomo
         run: python tools/validate_clients.py .rkit-stage
