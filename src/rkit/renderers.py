@@ -84,7 +84,7 @@ def render_singbox(accepted, name, layout):
 
 def render_mihomo_native(accepted, name):
     """Publish efficient native providers and retain the legacy classical URL."""
-    files = render_text(accepted, name, "combined", target="mihomo")[0]
+    files = render_text(accepted, name, "combined", target="mihomo")
     domain, ip, classical = [], [], []
     for rule in accepted:
         if rule.kind == "DOMAIN":
