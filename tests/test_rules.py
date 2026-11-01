@@ -126,11 +126,11 @@ class RuleTests(unittest.TestCase):
                          ["2001:db8::/32"])
 
     def test_keyword_minimization_preserves_ineligible_patterns(self):
-        rules = self.parse("DOMAIN-KEYWORD,abc\\nDOMAIN-KEYWORD,xabc\\n"
-                           "DOMAIN-KEYWORD,abcx\\nDOMAIN-KEYWORD,ab\\n"
-                           "DOMAIN-KEYWORD,ABC\\nDOMAIN-KEYWORD,abc*\\n"
-                           "DOMAIN-SUFFIX,abc.test\\nDOMAIN,notabc.test\\n"
-                           "DOMAIN-SUFFIX,notabc.test\\nDOMAIN,notab.test")
+        rules = self.parse("DOMAIN-KEYWORD,abc\nDOMAIN-KEYWORD,xabc\n"
+                           "DOMAIN-KEYWORD,abcx\nDOMAIN-KEYWORD,ab\n"
+                           "DOMAIN-KEYWORD,ABC\nDOMAIN-KEYWORD,abc*\n"
+                           "DOMAIN-SUFFIX,abc.test\nDOMAIN,notabc.test\n"
+                           "DOMAIN-SUFFIX,notabc.test\nDOMAIN,notab.test")
         result = {(rule.kind, rule.value) for rule in optimize(rules)}
         self.assertIn(("DOMAIN-KEYWORD", "ab"), result)
         self.assertIn(("DOMAIN-KEYWORD", "ABC"), result)
@@ -143,11 +143,11 @@ class RuleTests(unittest.TestCase):
         self.assertNotIn(("DOMAIN", "notab.test"), result)
 
     def test_suffix_boundary_does_not_use_raw_substrings(self):
-        rules = self.parse("DOMAIN-SUFFIX,example.com\\n"
-                           "DOMAIN-SUFFIX,notexample.com\\n"
-                           "DOMAIN,notexample.com\\n"
-                           "DOMAIN,a.example.com\\n"
-                           "DOMAIN,example.com.evil\\n"
+        rules = self.parse("DOMAIN-SUFFIX,example.com\n"
+                           "DOMAIN-SUFFIX,notexample.com\n"
+                           "DOMAIN,notexample.com\n"
+                           "DOMAIN,a.example.com\n"
+                           "DOMAIN,example.com.evil\n"
                            "DOMAIN-SUFFIX,example.com.evil")
         result = {(rule.kind, rule.value) for rule in optimize(rules)}
         self.assertIn(("DOMAIN-SUFFIX", "example.com"), result)
