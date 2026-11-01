@@ -65,6 +65,14 @@ def safe_file(root, path):
     return candidate
 
 
+def sources_for(spec, target):
+    return spec.get("sources_by_target", {}).get(target, spec["sources"])
+
+
+def layout_for(spec, target):
+    return spec.get("target_layouts", {}).get(target, spec.get("layout", "combined"))
+
+
 def load(root):
     cfg = yaml.load((Path(root) / "rkit.yaml").read_text(), Loader=UniqueLoader)
     keys(cfg, {"version", "targets", "rulesets"}, {"version", "targets", "rulesets"})
@@ -76,10 +84,20 @@ def load(root):
     for name, spec in cfg["rulesets"].items():
         if not re.fullmatch(r"[a-z0-9][a-z0-9_-]*", name):
             raise ValueError(f"invalid ruleset name: {name}")
-        keys(spec, {"sources", "additions", "exclusions", "targets", "purpose", "collapse_ip", "layout", "omit"}, {"sources", "targets"})
+        keys(spec, {"sources", "sources_by_target", "additions", "exclusions", "targets", "purpose", "collapse_ip", "layout", "target_layouts", "omit"}, {"sources", "targets"})
         targets = spec["targets"]
         if not isinstance(targets, list) or not targets or any(t not in CAPABILITIES for t in targets) or len(set(targets)) != len(targets):
             raise ValueError(f"{name}: invalid targets")
+        overrides = spec.get("sources_by_target", {})
+        keys(overrides, targets)
+        for target in targets:
+            if not isinstance(sources_for(spec, target), list) or not sources_for(spec, target):
+                raise ValueError(f"{name}: missing sources for {target}")
+        layouts = spec.get("target_layouts", {})
+        keys(layouts, targets)
+        for target, layout in layouts.items():
+            if layout not in {"combined", "split", "native-split"} or (layout == "native-split" and target != "mihomo"):
+                raise ValueError(f"{name}: invalid layout for {target}")
         if spec.get("purpose", "route") not in {"route", "fakeip"}:
             raise ValueError(f"{name}: invalid purpose")
         if spec.get("purpose") == "fakeip" and targets != ["mihomo"]:
@@ -96,7 +114,7 @@ def load(root):
         sources = spec["sources"]
         if not isinstance(sources, list) or not sources:
             raise ValueError(f"{name}: missing sources")
-        for source in sources:
+        for source in sources + [item for group in overrides.values() for item in group]:
             keys(source, {"url", "path", "format", "include_types"}, {"format"})
             if ("url" in source) == ("path" in source) or source["format"] not in PARSERS:
                 raise ValueError(f"{name}: source requires one url/path and known format")
@@ -126,10 +144,10 @@ def load(root):
             raise ValueError(f"unregistered manual subscription: {path}")
     for name, spec in cfg["rulesets"].items():
         for target in spec["targets"]:
-            if target == "loon" and spec["sources"][0].get("path", "").startswith("lq/manual/"):
+            if target == "loon" and sources_for(spec, target)[0].get("path", "").startswith("lq/manual/"):
                 paths = []
             else:
-                paths = planned_paths(target, name, spec.get("layout", "combined"), spec.get("purpose", "route"))
+                paths = planned_paths(target, name, layout_for(spec, target), spec.get("purpose", "route"))
             for path in paths:
                 if path in claimed:
                     raise ValueError(f"output path collision between {claimed[path]} and {name}: {path}")
