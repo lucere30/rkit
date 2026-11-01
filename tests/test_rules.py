@@ -1,4 +1,6 @@
 import json
+import ipaddress
+import random
 import unittest
 
 import yaml
@@ -122,6 +124,51 @@ class RuleTests(unittest.TestCase):
                          [(r.kind, r.value) for r in twice])
         self.assertEqual([r.value for r in once if r.kind == "IP-CIDR6"],
                          ["2001:db8::/32"])
+
+    def test_randomized_domain_matching_equivalence(self):
+        rng = random.Random(20261101)
+        labels = ["foo", "bar", "google", "x", "example", "notgoogle"]
+        for _ in range(100):
+            rules = self.parse("\n".join(
+                f"{rng.choice(['DOMAIN', 'DOMAIN-SUFFIX', 'DOMAIN-KEYWORD'])},"
+                f"{rng.choice(labels)}.{rng.choice(['com', 'test'])}"
+                for _ in range(35)))
+            optimized = optimize(rules)
+            hosts = [f"{rng.choice(labels)}.{rng.choice(labels)}.{rng.choice(['com', 'test'])}"
+                     for _ in range(80)]
+            hosts += [f"{rng.choice(labels)}.{rng.choice(['com', 'test'])}"
+                      for _ in range(80)]
+            def matches(rule, host):
+                if rule.kind == "DOMAIN":
+                    return rule.value == host
+                if rule.kind == "DOMAIN-SUFFIX":
+                    return host == rule.value or host.endswith("." + rule.value)
+                return rule.value in host
+            for host in hosts:
+                self.assertEqual(any(matches(rule, host) for rule in rules),
+                                 any(matches(rule, host) for rule in optimized),
+                                 host)
+            self.assertEqual([(r.kind, r.value) for r in optimized],
+                             [(r.kind, r.value) for r in optimize(optimized)])
+
+    def test_randomized_destination_ip_union_equivalence(self):
+        rng = random.Random(20261101)
+        for version in (4, 6):
+            base = ipaddress.ip_network("198.51.100.0/24" if version == 4
+                                        else "2001:db8::/120")
+            for _ in range(30):
+                networks = [rng.choice(list(base.subnets(new_prefix=base.prefixlen + 4)))
+                            for _ in range(15)]
+                kind = "IP-CIDR" if version == 4 else "IP-CIDR6"
+                rules = self.parse("\n".join(f"{kind},{network}" for network in networks))
+                result = optimize(rules, collapse_ip=True)
+                for address in base.hosts():
+                    self.assertEqual(any(address in network for network in networks),
+                                     any(address in ipaddress.ip_network(rule.value)
+                                         for rule in result))
+                self.assertEqual([(r.kind, r.value) for r in result],
+                                 [(r.kind, r.value)
+                                  for r in optimize(result, collapse_ip=True)])
 
     def test_fakeip_wildcards_are_not_suffixes(self):
         rules = parse("+.example.com\na.example.com\n*.other.example\nexact.test", "domain-list", "test")
