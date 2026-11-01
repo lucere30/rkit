@@ -302,20 +302,12 @@
     },
     "merged_rules": {
       "loon": {
-        "config_sha256": "c12d55bce20dbef83259e628e293cfda4a24c76a069fad6c91745cac309bbf32",
+        "config_sha256": "b2268761e7831cda8df8ee162baac4218d343c9875b5a2c7beb3ef4f3550fb0b",
         "engine": "27e26d9abb65e3acf98aa127cc5f42d2eba91efc9f94daee3c8a018c4c006122",
         "inputs": [
           {
             "sha256": "03fdfc75b6d42893dc8636cea8a81e72c559a6f7e3063af5683455f494fd54a1",
             "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ProxyLite/ProxyLite.list"
-          },
-          {
-            "sha256": "c5fd540781605fa2b0e9fc8ee08698799559fae8ad296f33e70890f9cd36b9f7",
-            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Global/Global.list"
-          },
-          {
-            "sha256": "4a90b3128edddd44a1c31ba2a8bb91d84ce7e6655f02186a3ea5f7df8f300434",
-            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Global/Global_Domain.list"
           },
           {
             "sha256": "5963ff4f8bd4d3452f95bfdb677c42e03f8d6add2cfbf76ba1638e4c0a776a3c",
@@ -340,21 +332,17 @@
         ],
         "omitted": {},
         "outputs": {
-          "lq/generated/merged_rules.list": "24b117cd1c12dd9db44aeb890f2066ccec6fc0b4561ce47355f68ded05fc6181"
+          "lq/generated/merged_rules.list": "0bcfb1acafbfe3e7a78bc4dd7bd2abb02b6d0acfcf164196c310676a040ee341"
         },
-        "rules": 30886
+        "rules": 9576
       },
       "mihomo": {
-        "config_sha256": "c12d55bce20dbef83259e628e293cfda4a24c76a069fad6c91745cac309bbf32",
+        "config_sha256": "b2268761e7831cda8df8ee162baac4218d343c9875b5a2c7beb3ef4f3550fb0b",
         "engine": "27e26d9abb65e3acf98aa127cc5f42d2eba91efc9f94daee3c8a018c4c006122",
         "inputs": [
           {
             "sha256": "c82fb568f2a215831a8b37c608237eac545d161eb9b1cf90f7018c6c75be97e7",
             "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ProxyLite/ProxyLite.list"
-          },
-          {
-            "sha256": "6dbfdc19293753fbe874dea6dec0f2a46427d6fe4e98e644854daa0180ced3ba",
-            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Global/Global.list"
           },
           {
             "sha256": "9d64e0fe06a55eea536c999c9a05ef35734772c140bf33d38bbec5a69f361f38",
@@ -371,12 +359,12 @@
         ],
         "omitted": {},
         "outputs": {
-          "cat/merged_rules.yaml": "9e76b13e9bfb9d756b4cadfd01158ceda2e93647489038a6bfb75a2bd0758653",
-          "cat/merged_rules_classical.yaml": "77e7377cb708225b7496c313f9eb59947d190bbca79a5b09b648a0fe2e5681ba",
-          "cat/merged_rules_domain.yaml": "562df6a86896b5d1b4e54e13eba02a5d90d86c4e682e6f70219b6c8dc38040ae",
-          "cat/merged_rules_ip.yaml": "2d81fd392baa4fe0d0c33ba7d1558f11e09d405a7013ee2cbfc9b7c5c03f027c"
+          "cat/merged_rules.yaml": "0800a7db4587c8c7ae0dd67cdff4a43106eea99faa96732f481cffe692e1ee2f",
+          "cat/merged_rules_classical.yaml": "d7cb937422b350f533a78f482ed290d1f34c3850b9b69ea0ec0c998cd651a2b7",
+          "cat/merged_rules_domain.yaml": "bdca10cf519a8f8b066c6d016d0a526e8256fe041ee3231d59cc1565452e578a",
+          "cat/merged_rules_ip.yaml": "d35d1904b91fa0763184941627380c9dedcbcdf1172a6f274d7a23a8b7fcb062"
         },
-        "rules": 30811
+        "rules": 9501
       },
       "singbox": {
         "config_sha256": "596cd9d3621aab4de6f31fb39957b14ec8515052071359ac38aea4817af93b44",
