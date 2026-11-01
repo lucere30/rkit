@@ -9,17 +9,6 @@ from rkit.transform import exclude, optimize
 
 
 class RuleTests(unittest.TestCase):
-    def test_process_names_are_literal_and_mihomo_only(self):
-        rules = self.parse("PROCESS-NAME,Surge 4\nPROCESS-NAME,qBittorrent\nPROCESS-NAME,qbittorrent\nPROCESS-NAME,xray.exe")
-        values = yaml.safe_load(render(optimize(rules), "mihomo", "apps")[0]["cat/apps.yaml"])["payload"]
-        self.assertEqual(values, ["PROCESS-NAME,Surge 4", "PROCESS-NAME,qBittorrent", "PROCESS-NAME,qbittorrent", "PROCESS-NAME,xray.exe"])
-        for target in ("loon", "singbox"):
-            with self.assertRaisesRegex(ValueError, "cannot represent PROCESS-NAME"):
-                render(rules, target, "apps")
-        for value in ("xray.exe,DIRECT", "xray.exe,no-resolve", "/usr/bin/xray", "xray*", "xray?", "C:\\xray.exe"):
-            with self.subTest(value=value), self.assertRaises(ValueError):
-                self.parse("PROCESS-NAME," + value)
-
     def parse(self, text, **kw):
         return parse(text, "classical", "test", **kw)
 

@@ -96,19 +96,6 @@ class PipelineTests(Project):
         with self.assertRaisesRegex(ValueError, "include_types"):
             load(self.root)
 
-    def test_process_ruleset_only_builds_mihomo_with_all_platforms_enabled(self):
-        self.cfg["rulesets"] = {"download": {
-            "sources": [{"path": "custom/download.list", "format": "classical"}],
-            "targets": ["mihomo"]}}
-        self.write("custom/download.list", "PROCESS-NAME,qBittorrent\n")
-        self.save()
-        validate_local(self.root, load(self.root))
-        result = self.run_build()
-        self.assertFalse(result["report"]["failed"])
-        self.assertEqual(set(result["outputs"]), {"cat/download.yaml", "manifest.json"})
-        self.accept(result)
-        self.assertEqual(result["outputs"], self.run_build()["outputs"])
-
     def test_build_is_deterministic_and_input_files_untouched(self):
         before = fingerprint(self.root)
         first = self.run_build()

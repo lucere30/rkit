@@ -167,23 +167,6 @@
         "rules": 7
       }
     },
-    "download": {
-      "mihomo": {
-        "config_sha256": "e70aea3f54b33d92a04e5ceaf938233b05921cddb6d48f9fd5fd3d76a309202b",
-        "engine": "7bee1719df034796ea3b4cbabbe083b109a5b5f9c12c01410a1aaeb6bd9a10e8",
-        "inputs": [
-          {
-            "sha256": "12943367b84ee8bacc149b99b543fdfc195db8d9c63c9a2520cb0f630ba17329",
-            "source": "custom/download.list"
-          }
-        ],
-        "omitted": {},
-        "outputs": {
-          "cat/download.yaml": "138be8106b18c94befdd1c3ea7a1724b4e9026fe09f26243e1b299403cc56a1c"
-        },
-        "rules": 43
-      }
-    },
     "espn": {
       "loon": {
         "config_sha256": "42daba81cdb37c8dacdc3d66840f18888c8357cf85069c6a0fccf8d12f939e82",
@@ -464,23 +447,6 @@
           "singbox/proxy_ip.json": "2db6ae8eb9d24cb86924a7020c6f3eebfa41b5fc5848a53e239465db622c2312"
         },
         "rules": 33
-      }
-    },
-    "proxy-tools": {
-      "mihomo": {
-        "config_sha256": "1fe4f29cae5e93a61384c3bcc5468500b7e2b5661a780eceeacd060021461228",
-        "engine": "7bee1719df034796ea3b4cbabbe083b109a5b5f9c12c01410a1aaeb6bd9a10e8",
-        "inputs": [
-          {
-            "sha256": "a4d67e4d05fbd658f1450668997246b669149eeaa7d67534e53fbec07054edfa",
-            "source": "custom/proxy-tools.list"
-          }
-        ],
-        "omitted": {},
-        "outputs": {
-          "cat/proxy-tools.yaml": "52734e2aac92deb4b375d5a8f95dfeafc20efa02f5f232bced36495a26c7d76e"
-        },
-        "rules": 64
       }
     }
   },

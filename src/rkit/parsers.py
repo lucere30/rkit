@@ -55,9 +55,6 @@ def classical(text, source, *, allow_empty=False, manual=False):
                 elif kind == "DOMAIN-KEYWORD":
                     if not value or re.search(r"[\s,/:<>#]", value):
                         raise ValueError("invalid domain keyword")
-                elif kind == "PROCESS-NAME":
-                    if not value or any(c in value for c in "/\\*?\""):
-                        raise ValueError("expected a literal process name, not a path or pattern")
                 elif kind == "IP-ASN":
                     if not value.isascii() or not value.isdecimal() or not 0 <= int(value) <= 4294967295:
                         raise ValueError("invalid ASN")

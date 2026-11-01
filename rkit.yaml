@@ -5,18 +5,6 @@ targets:
   mihomo: true
   singbox: false
 rulesets:
-  proxy-tools:
-    sources:
-    - path: custom/proxy-tools.list
-      format: classical
-    targets:
-    - mihomo
-  download:
-    sources:
-    - path: custom/download.list
-      format: classical
-    targets:
-    - mihomo
   direct:
     sources:
     - path: lq/manual/direct.list
