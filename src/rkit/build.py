@@ -7,7 +7,7 @@ from pathlib import Path
 
 import yaml
 
-from .config import load, managed_path, safe_file
+from .config import load, managed_path, safe_file, sources_for, layout_for
 from .fetch import digest, snapshots
 from .parsers import parse
 from .renderers import CAPABILITIES, render
@@ -74,51 +74,58 @@ def validate_local(root, cfg):
 
 
 def build_one(root, name, spec, enabled, remote, engine):
-    inputs, upstream = [], []
-    for source in spec["sources"]:
-        ref = source.get("url", source.get("path"))
-        data = remote[ref] if "url" in source else safe_file(root, ref).read_bytes()
-        if isinstance(data, Exception):
-            raise ValueError(f"{ref}: {data}")
-        kwargs = {"manual": True} if source.get("path", "").startswith("lq/manual/") else {}
-        parsed = parse(data.decode("utf-8-sig"), source["format"], ref, **kwargs)
-        entry = {"source": ref, "sha256": digest(data)}
-        if "include_types" in source:
-            selected = [r for r in parsed if r.kind in source["include_types"]]
-            if not selected:
-                raise ValueError(f"{ref}: include_types matched no rules; retaining previous subscription")
-            entry.update(parsed_rules=len(parsed), selected_rules=len(selected))
-            parsed = selected
-        upstream += parsed
-        inputs.append(entry)
+    """Process every target's native upstream as a complete, guarded unit."""
+    files, entries = {}, {}
+    report = {"targets": {}}
     purpose = spec.get("purpose", "route")
-    overlays = {}
+    overlays, extra_inputs = {}, []
     for field in ("exclusions", "additions"):
         path = spec.get(field)
         data = safe_file(root, path).read_bytes() if path else b""
         overlays[field] = parse(data.decode("utf-8-sig"), "domain-list" if purpose == "fakeip" else "classical", path or field, allow_empty=True)
         if path:
-            inputs.append({"source": path, "sha256": digest(data)})
-    retained = exclude(upstream, overlays["exclusions"])
-    combined = retained + overlays["additions"]
-    rules = optimize(combined, collapse_ip=spec.get("collapse_ip", False))
-    if not rules:
-        raise ValueError(f"{name}: empty result; refusing to erase a subscription")
-    files, entries, report = {}, {}, {"input_rules": len(upstream), "excluded": len(upstream) - len(retained),
-                                      "added": len(overlays["additions"]), "output_rules": len(rules), "targets": {}}
-    manual = spec["sources"][0].get("path", "").startswith("lq/manual/")
+            extra_inputs.append({"source": path, "sha256": digest(data)})
     for target in enabled:
-        outputs, skipped = render(rules, target, name, purpose=purpose, layout=spec.get("layout", "combined"), omit=spec.get("omit", {}).get(target, []))
+        sources = sources_for(spec, target)
+        upstream, inputs = [], []
+        for source in sources:
+            ref = source.get("url", source.get("path"))
+            data = remote[ref] if "url" in source else safe_file(root, ref).read_bytes()
+            if isinstance(data, Exception):
+                raise ValueError(f"{target}: {ref}: {data}")
+            kwargs = {"manual": True} if source.get("path", "").startswith("lq/manual/") else {}
+            parsed = parse(data.decode("utf-8-sig"), source["format"], ref, **kwargs)
+            entry = {"source": ref, "sha256": digest(data)}
+            if "include_types" in source:
+                selected = [r for r in parsed if r.kind in source["include_types"]]
+                if not selected:
+                    raise ValueError(f"{target}: {ref}: include_types matched no rules; retaining previous subscription")
+                entry.update(parsed_rules=len(parsed), selected_rules=len(selected))
+                parsed = selected
+            upstream.extend(parsed)
+            inputs.append(entry)
+        retained = exclude(upstream, overlays["exclusions"])
+        rules = optimize(retained + overlays["additions"], collapse_ip=spec.get("collapse_ip", False))
+        if not rules:
+            raise ValueError(f"{target}: {name}: empty result; refusing to erase subscription")
+        outputs, skipped = render(rules, target, name, purpose=purpose,
+                                  layout=layout_for(spec, target), omit=spec.get("omit", {}).get(target, []))
+        manual = sources[0].get("path", "").startswith("lq/manual/")
         if target == "loon" and manual:
-            outputs = {}  # The editable source itself is the Loon subscription.
+            outputs = {}
         files.update(outputs)
-        entry = {"engine": engine, "config_sha256": digest(json_text(spec).encode()), "inputs": inputs,
+        entry = {"engine": engine, "config_sha256": digest(json_text(spec).encode()),
+                 "inputs": inputs + extra_inputs,
                  "outputs": {p: digest(v.encode()) for p, v in outputs.items()},
                  "omitted": dict(Counter(r["type"] for r in skipped)), "rules": len(rules) - len(skipped)}
         if target == "loon" and manual:
-            entry["subscription"] = spec["sources"][0]["path"]
+            entry["subscription"] = sources[0]["path"]
         entries[target] = entry
-        report["targets"][target] = {"omitted": skipped, "outputs": list(outputs)}
+        report["targets"][target] = {"input_rules": len(upstream), "output_rules": len(rules),
+                                     "omitted": skipped, "outputs": list(outputs)}
+        if "input_rules" not in report:
+            report.update(input_rules=len(upstream), excluded=len(upstream) - len(retained),
+                          added=len(overlays["additions"]), output_rules=len(rules))
     return files, entries, report
 
 
@@ -131,7 +138,8 @@ def build(root, *, cache_dir=None, offline=False, fetcher=None):
     owners = {path: (name, target) for name, targets in previous["rulesets"].items()
               for target, entry in targets.items() for path in entry["outputs"]}
     selected = {name: [t for t in spec["targets"] if cfg["targets"][t]] for name, spec in cfg["rulesets"].items()}
-    urls = [s["url"] for name, spec in cfg["rulesets"].items() if selected[name] for s in spec["sources"] if "url" in s]
+    urls = [source["url"] for name, spec in cfg["rulesets"].items()
+            for target in selected[name] for source in sources_for(spec, target) if "url" in source]
     kwargs = {"fetcher": fetcher} if fetcher is not None else {}
     remote = snapshots(urls, cache_dir=cache_dir, offline=offline, **kwargs)
     engine = engine_hash(root)
