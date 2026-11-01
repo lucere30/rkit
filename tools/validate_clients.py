@@ -60,21 +60,36 @@ def validate(stage, cache):
         clients = dict(zip(sorted(targets), pool.map(lambda name: binary(name, Path(cache)), sorted(targets))))
     with tempfile.TemporaryDirectory(prefix="rkit-native-") as directory:
         temp = Path(directory)
-        route_rules, filters = [], []
-        # Domain-only Fake-IP providers contain no TYPE prefix.
+        providers, route_rules, filters = {}, [], []
         for name in plan["files"]:
             if name.startswith("cat/"):
                 values = yaml.safe_load((files / name).read_text())["payload"]
-                for value in values:
-                    if "," not in value:
-                        filters.append(value)
-                    else:
-                        kind, match, *options = value.split(",")
-                        route_rules.append(",".join([kind, match, "DIRECT", *options]))
+                if not values:
+                    raise ValueError(f"{name}: empty rule provider")
+                stem = Path(name).stem
+                if name.endswith("_domain.yaml"):
+                    behavior = "domain"
+                elif name.endswith("_ip.yaml"):
+                    behavior = "ipcidr"
+                elif name.endswith("_classical.yaml") or any("," in v for v in values):
+                    behavior = "classical"
+                else:
+                    behavior = "domain"
+                destination = temp / "rules" / Path(name).name
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                destination.write_bytes((files / name).read_bytes())
+                providers[stem] = {"type": "file", "behavior": behavior, "format": "yaml",
+                                   "path": str(destination)}
+                if name.endswith("_ip.yaml"):
+                    route_rules.append(f"RULE-SET,{stem},DIRECT,no-resolve")
+                elif behavior == "domain" and not name.endswith("_domain.yaml"):
+                    filters.append(f"rule-set:{stem}")
+                else:
+                    route_rules.append(f"RULE-SET,{stem},DIRECT")
             elif name.startswith("singbox/") and name.endswith(".json"):
                 subprocess.run([str(clients["sing-box"]), "rule-set", "compile", "--output", str(temp / "check.srs"), str((files / name).resolve())], check=True, timeout=120)
         if "mihomo" in clients:
-            config = {"mode": "rule", "rules": route_rules + ["MATCH,DIRECT"],
+            config = {"mode": "rule", "rule-providers": providers, "rules": route_rules + ["MATCH,DIRECT"],
                       "dns": {"enable": True, "enhanced-mode": "fake-ip", "fake-ip-range": "198.18.0.1/16",
                               "nameserver": ["1.1.1.1"], "fake-ip-filter": filters}}
             path = temp / "mihomo.yaml"
