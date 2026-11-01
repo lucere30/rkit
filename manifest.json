@@ -302,9 +302,17 @@
     },
     "merged_rules": {
       "loon": {
-        "config_sha256": "22e0caa2c9eaa7299047e7eca8204d65517e06b25b47b7af463bf6b45eec5022",
+        "config_sha256": "f4bdd1cccea40095496b9954be370dd54d5a8981b5b903dbda68d99e0378de35",
         "engine": "edcd52f952386a45b4841f1fc818bc6e252eaa67ca38600cafecea1557b963a4",
         "inputs": [
+          {
+            "sha256": "03fdfc75b6d42893dc8636cea8a81e72c559a6f7e3063af5683455f494fd54a1",
+            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Loon/ProxyLite/ProxyLite.list"
+          },
+          {
+            "sha256": "c5fd540781605fa2b0e9fc8ee08698799559fae8ad296f33e70890f9cd36b9f7",
+            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Loon/Global/Global.list"
+          },
           {
             "sha256": "9d64e0fe06a55eea536c999c9a05ef35734772c140bf33d38bbec5a69f361f38",
             "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Proxy/Proxy.list"
@@ -320,14 +328,22 @@
         ],
         "omitted": {},
         "outputs": {
-          "lq/generated/merged_rules.list": "c0bf31d7683398bee74a70ec6b1e8111b0c42badf8cc73faec09cdd8eac6c431"
+          "lq/generated/merged_rules.list": "32767c7ace07ece8f47c75f55de02d37b83ab921250f774a1d7f150cbf320df3"
         },
-        "rules": 9465
+        "rules": 9564
       },
       "mihomo": {
-        "config_sha256": "22e0caa2c9eaa7299047e7eca8204d65517e06b25b47b7af463bf6b45eec5022",
+        "config_sha256": "f4bdd1cccea40095496b9954be370dd54d5a8981b5b903dbda68d99e0378de35",
         "engine": "edcd52f952386a45b4841f1fc818bc6e252eaa67ca38600cafecea1557b963a4",
         "inputs": [
+          {
+            "sha256": "03fdfc75b6d42893dc8636cea8a81e72c559a6f7e3063af5683455f494fd54a1",
+            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Loon/ProxyLite/ProxyLite.list"
+          },
+          {
+            "sha256": "c5fd540781605fa2b0e9fc8ee08698799559fae8ad296f33e70890f9cd36b9f7",
+            "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Loon/Global/Global.list"
+          },
           {
             "sha256": "9d64e0fe06a55eea536c999c9a05ef35734772c140bf33d38bbec5a69f361f38",
             "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Proxy/Proxy.list"
@@ -341,11 +357,13 @@
             "source": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/GlobalMedia/GlobalMedia.list"
           }
         ],
-        "omitted": {},
-        "outputs": {
-          "cat/merged_rules.yaml": "19df8473ba167dacc9d96201bbe6d8fd8881cf8be6179b5eda047ee7319da14b"
+        "omitted": {
+          "USER-AGENT": 46
         },
-        "rules": 9465
+        "outputs": {
+          "cat/merged_rules.yaml": "f6148a9a92e67384c4250bdcd057cd9ff6bcc107f3ad6d324723ba65f6151297"
+        },
+        "rules": 9518
       },
       "singbox": {
         "config_sha256": "596cd9d3621aab4de6f31fb39957b14ec8515052071359ac38aea4817af93b44",
