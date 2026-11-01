@@ -77,6 +77,17 @@ class RuleTests(unittest.TestCase):
         rules = self.parse("IP-CIDR,192.0.2.0/25\nIP-CIDR,192.0.2.128/25\nIP-CIDR6,2001:db8::/33\nIP-CIDR6,2001:db8:8000::/33")
         self.assertEqual([r.value for r in optimize(rules, collapse_ip=True)], ["192.0.2.0/24", "2001:db8::/32"])
 
+    def test_source_ip_collapse_is_independent_from_destination(self):
+        rules = self.parse("SRC-IP-CIDR,192.0.2.0/25\\nSRC-IP-CIDR,192.0.2.128/25\\n"
+                           "IP-CIDR,192.0.2.0/25\\nIP-CIDR,192.0.2.128/25\\n"
+                           "SRC-IP-CIDR,198.51.100.0/24\\nSRC-IP-CIDR,198.51.100.0/25")
+        optimized = optimize(rules, collapse_ip=True)
+        self.assertEqual([(r.kind, r.value) for r in optimized],
+                         [("IP-CIDR", "192.0.2.0/24"),
+                          ("SRC-IP-CIDR", "192.0.2.0/24"),
+                          ("SRC-IP-CIDR", "198.51.100.0/24")])
+        self.assertEqual(len(optimize(rules, collapse_ip=False)), 6)
+
     def test_fakeip_wildcards_are_not_suffixes(self):
         rules = parse("+.example.com\na.example.com\n*.other.example\nexact.test", "domain-list", "test")
         rules = optimize(rules)

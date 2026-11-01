@@ -40,15 +40,18 @@ def optimize(rules, *, collapse_ip=False):
         and any(parent in suffixes for parent in ancestors(r.value, r.kind == "DOMAIN"))
     )]
     if collapse_ip:
-        groups = {4: [], 6: []}
+        # Destination and source address predicates must never be merged together.
+        groups = {("dst", 4): [], ("dst", 6): [], ("src", 4): []}
         kept = []
         for r in rules:
-            if r.kind in {"IP-CIDR", "IP-CIDR6"}:
-                groups[ipaddress.ip_network(r.value).version].append(ipaddress.ip_network(r.value))
+            if r.kind in {"IP-CIDR", "IP-CIDR6", "SRC-IP-CIDR"}:
+                network = ipaddress.ip_network(r.value)
+                direction = "src" if r.kind == "SRC-IP-CIDR" else "dst"
+                groups[(direction, network.version)].append(network)
             else:
                 kept.append(r)
-        for version, networks in groups.items():
-            kept.extend(Rule("IP-CIDR" if version == 4 else "IP-CIDR6", str(n), "collapsed")
-                        for n in ipaddress.collapse_addresses(networks))
+        for (direction, version), networks in groups.items():
+            kind = "SRC-IP-CIDR" if direction == "src" else ("IP-CIDR" if version == 4 else "IP-CIDR6")
+            kept.extend(Rule(kind, str(n), "collapsed") for n in ipaddress.collapse_addresses(networks))
         rules = kept
     return rules
