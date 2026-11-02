@@ -2,9 +2,8 @@
 import ipaddress
 import re
 
-import yaml
-
 from .model import CIDR_TYPES, DOMAIN_TYPES, Rule, TARGET_IP_TYPES, TEXT_TYPES
+from .yamlio import safe_load
 
 LABEL = re.compile(r"[a-zA-Z0-9_](?:[a-zA-Z0-9_-]{0,61}[a-zA-Z0-9_])?\Z")
 
@@ -113,7 +112,7 @@ def loon_domain(text, source, *, allow_empty=False):
 
 
 def payload(text, source, parser, **kwargs):
-    data = yaml.safe_load(text)
+    data = safe_load(text)
     if (not isinstance(data, dict) or set(data) != {"payload"}
             or not isinstance(data["payload"], list)
             or not all(isinstance(v, str) and "\n" not in v and "\r" not in v for v in data["payload"])):

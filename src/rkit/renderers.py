@@ -2,9 +2,8 @@
 from collections import defaultdict
 import json
 
-import yaml
-
 from .model import DOMAIN_TYPES, TARGET_IP_TYPES, TEXT_TYPES
+from .yamlio import safe_load
 
 CAPABILITIES = {
     "loon": DOMAIN_TYPES | {"IP-CIDR", "IP-CIDR6"} | TEXT_TYPES,
@@ -47,7 +46,7 @@ def category(rule):
 def yaml_payload(values):
     # JSON strings are valid YAML scalars; no quoting or whitespace ambiguity.
     text = "payload:\n" + "".join(f"  - {json.dumps(v, ensure_ascii=False)}\n" for v in values)
-    if yaml.safe_load(text) != {"payload": values}:
+    if safe_load(text) != {"payload": values}:
         raise ValueError("YAML serialization failed")
     return text
 

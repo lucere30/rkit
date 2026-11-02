@@ -1,0 +1,40 @@
+# Merge this fragment into your existing Mihomo config. PROXY must already
+# exist; replace it with your own group name. Keep your other routing rules,
+# DNS settings and fallback rule. These three RULE-SETs replace the combined
+# proxy-merged.yaml reference at the same position in your routing policy.
+rule-providers:
+  proxy-merged-domain:
+    type: http
+    behavior: domain
+    format: yaml
+    url: https://raw.githubusercontent.com/lucere30/rkit/main/cat/proxy-merged-domain.yaml
+    path: ./rules/proxy-merged-domain.yaml
+    interval: 86400
+  proxy-merged-classical:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/lucere30/rkit/main/cat/proxy-merged-classical.yaml
+    path: ./rules/proxy-merged-classical.yaml
+    interval: 86400
+  proxy-merged-ip:
+    type: http
+    behavior: ipcidr
+    format: yaml
+    url: https://raw.githubusercontent.com/lucere30/rkit/main/cat/proxy-merged-ip.yaml
+    path: ./rules/proxy-merged-ip.yaml
+    interval: 86400
+
+rules:
+  - RULE-SET,proxy-merged-domain,PROXY
+  - RULE-SET,proxy-merged-classical,PROXY
+  - RULE-SET,proxy-merged-ip,PROXY,no-resolve
+
+dns:
+  # Optional: merge into your existing nameserver-policy. Replace this example
+  # resolver with the resolver(s) you intend to use for these proxy domains.
+  # Domain and classical must share the policy: keyword-covered hostnames may
+  # have been removed from the native domain file by coverage deduplication.
+  nameserver-policy:
+    "rule-set:proxy-merged-domain,proxy-merged-classical":
+      - https://1.1.1.1/dns-query
