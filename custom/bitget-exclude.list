@@ -5,7 +5,7 @@
 
 # Shared certificate infrastructure
 # https://www.amazontrust.com/ https://www.rapidssl.com/
-# ss2.us is also required by unrelated software; see the linked review notes.
+# ss2.us is also required by unrelated software (Autodesk licensing).
 DOMAIN-SUFFIX,amazontrust.com
 DOMAIN-SUFFIX,rapidssl.com
 DOMAIN-SUFFIX,ss2.us

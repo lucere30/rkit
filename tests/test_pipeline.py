@@ -215,6 +215,65 @@ class PipelineTests(Project):
         self.accept(result)
         self.assertEqual((self.root / "lq/manual/x.list").read_text(), text)
 
+    def test_manual_override_rejects_mixed_sources_in_either_order(self):
+        manual = {"path": "lq/manual/x.list", "format": "classical"}
+        self.write(manual["path"], "DOMAIN,manual.test\n")
+        spec = self.cfg["rulesets"]["x"]
+        self.cfg["rulesets"]["manual"] = {"sources": [manual], "targets": ["loon"]}
+        remote = spec["sources"][0]
+        for sources in ([manual, remote], [remote, manual]):
+            spec["sources_by_target"] = {"loon": sources}
+            self.save()
+            with self.assertRaisesRegex(ValueError, "cannot be mixed"):
+                load(self.root)
+
+    def test_manual_override_rejects_overlays_and_target_split(self):
+        spec = self.cfg["rulesets"]["x"]
+        spec["sources_by_target"] = {"loon": [{"path": "lq/manual/x.list", "format": "classical"}]}
+        self.write("lq/manual/x.list", "DOMAIN,manual.test\n")
+        self.cfg["rulesets"]["manual"] = {"sources": spec["sources_by_target"]["loon"], "targets": ["loon"]}
+        for field, value in (("additions", "custom/add.list"),
+                             ("exclusions", "custom/exclude.list"),
+                             ("target_layouts", {"loon": "split"})):
+            spec[field] = value
+            self.save()
+            with self.assertRaisesRegex(ValueError, "cannot be mixed"):
+                load(self.root)
+            del spec[field]
+
+    def test_standalone_manual_override_is_registered_and_preserved(self):
+        spec = self.cfg["rulesets"]["x"]
+        spec["sources_by_target"] = {"loon": [{"path": "lq/manual/x.list", "format": "classical"}]}
+        text = "# Direct subscription\nDOMAIN,manual.test\n"
+        self.write("lq/manual/x.list", text)
+        self.save()
+        validate_local(self.root, load(self.root))
+        result = self.run_build()
+        self.assertFalse(result["report"]["failed"])
+        self.assertNotIn("lq/generated/x.list", result["outputs"])
+        entry = json.loads(result["outputs"]["manifest.json"])["rulesets"]["x"]["loon"]
+        self.assertEqual(entry["subscription"], "lq/manual/x.list")
+        self.assertIn("example.com", result["outputs"]["cat/x.yaml"])
+        self.accept(result)
+        self.assertEqual((self.root / "lq/manual/x.list").read_text(), text)
+
+    def test_local_check_validates_target_override(self):
+        self.cfg["rulesets"]["x"]["sources_by_target"] = {
+            "mihomo": [{"path": "custom/mihomo.list", "format": "classical"}]}
+        self.write("custom/mihomo.list", "DOMAIN,x.test\nUSER-AGENT,Agent*\n")
+        self.save()
+        with self.assertRaisesRegex(ValueError, "cannot represent USER-AGENT"):
+            validate_local(self.root, load(self.root))
+
+    def test_local_check_uses_only_each_targets_effective_sources(self):
+        spec = self.cfg["rulesets"]["x"]
+        spec["sources"] = [{"path": "custom/loon.list", "format": "classical"}]
+        spec["sources_by_target"] = {target: [{"url": "https://example.test/x", "format": "classical"}]
+                                     for target in ("mihomo", "singbox")}
+        self.write("custom/loon.list", "DOMAIN,x.test\nUSER-AGENT,Agent*\n")
+        self.save()
+        validate_local(self.root, load(self.root))
+
     def test_empty_result_preserves_previous_outputs(self):
         self.accept(self.run_build())
         self.data = b"# nothing\n"

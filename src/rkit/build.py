@@ -58,13 +58,13 @@ def validate_local(root, cfg):
     """Offline CI validates editable files, including direct-use no-resolve policy."""
     for name, spec in cfg["rulesets"].items():
         purpose = spec.get("purpose", "route")
-        for source in spec["sources"]:
-            if "path" not in source:
-                continue
-            path = source["path"]
-            kwargs = {"manual": True} if path.startswith("lq/manual/") else {}
-            rules = parse(safe_file(root, path).read_text(encoding="utf-8-sig"), source["format"], path, **kwargs)
-            for target in spec["targets"]:
+        for target in spec["targets"]:
+            for source in sources_for(spec, target):
+                if "path" not in source:
+                    continue
+                path = source["path"]
+                kwargs = {"manual": True} if path.startswith("lq/manual/") else {}
+                rules = parse(safe_file(root, path).read_text(encoding="utf-8-sig"), source["format"], path, **kwargs)
                 render(rules, target, name, purpose=purpose, omit=spec.get("omit", {}).get(target, []))
         for field in ("additions", "exclusions"):
             if field in spec:
