@@ -2,7 +2,7 @@
 import ipaddress
 import re
 
-from .model import CIDR_TYPES, DOMAIN_TYPES, Rule, TARGET_IP_TYPES, TEXT_TYPES
+from .model import CIDR_TYPES, Rule, TARGET_IP_TYPES, TEXT_TYPES
 from .yamlio import safe_load
 
 LABEL = re.compile(r"[a-zA-Z0-9_](?:[a-zA-Z0-9_-]{0,61}[a-zA-Z0-9_])?\Z")

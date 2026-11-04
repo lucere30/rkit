@@ -134,11 +134,15 @@ def load(root):
         for field in ("additions", "exclusions"):
             if field in spec:
                 input_path(spec[field])
-        manual = [s for s in sources if s.get("path", "").startswith("lq/manual/")]
-        if manual and (len(sources) != 1 or "additions" in spec or "exclusions" in spec or spec.get("layout", "combined") != "combined"):
-            raise ValueError("directly subscribed manual lists cannot be mixed with overlays, sources or split layout")
+        for target in targets:
+            effective = sources_for(spec, target)
+            manual = [s for s in effective if s.get("path", "").startswith("lq/manual/")]
+            if manual and (len(effective) != 1 or "additions" in spec or "exclusions" in spec
+                           or layout_for(spec, target) != "combined"):
+                raise ValueError("directly subscribed manual lists cannot be mixed with overlays, sources or split layout")
     claimed = {}
-    registered = {s["path"] for spec in cfg["rulesets"].values() for s in spec["sources"] if "path" in s}
+    registered = {s["path"] for spec in cfg["rulesets"].values()
+                  for target in spec["targets"] for s in sources_for(spec, target) if "path" in s}
     for path in (Path(root) / "lq/manual").rglob("*"):
         if path.suffix in {".list", ".txt"} and path.relative_to(root).as_posix() not in registered:
             raise ValueError(f"unregistered manual subscription: {path}")
