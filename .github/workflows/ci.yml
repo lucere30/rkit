@@ -8,7 +8,6 @@ on:
       - 'src/**'
       - 'tests/**'
       - 'tools/**'
-      - 'examples/**'
       - 'custom/**'
       - 'lq/manual/**'
       - 'rkit.yaml'
@@ -120,7 +119,7 @@ jobs:
           PY
       - name: Validate staged providers with pinned Mihomo
         run: python tools/validate_clients.py .rkit-stage
-      - name: Reject invalid providers and verify documented DNS coverage
+      - name: Reject invalid providers and verify DNS keyword coverage
         env:
           RKIT_MIHOMO_BINARY: .rkit-cache/clients/mihomo
         run: python -m unittest discover -s tests -p test_validate_clients.py -v

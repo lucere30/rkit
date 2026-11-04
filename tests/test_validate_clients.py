@@ -98,7 +98,7 @@ class NativeProviderTests(unittest.TestCase):
         self.assertTrue(children)
         self.assertTrue(all(child.poll() is not None for child in children))
 
-    def test_documented_dns_policy_keeps_keyword_coverage(self):
+    def test_dns_policy_keeps_keyword_coverage(self):
         # Two local DNS responders identify which resolver the policy selected.
         # No upstream network or credentials are used in this regression test.
         stop = threading.Event()
@@ -127,8 +127,16 @@ class NativeProviderTests(unittest.TestCase):
                 thread = threading.Thread(target=responder, args=(sock, address), daemon=True)
                 thread.start()
                 threads.append(thread)
-            example = Path(__file__).resolve().parents[1] / "examples/mihomo-proxy-merged.yaml"
-            config = yaml.safe_load(example.read_text())
+            config = {
+                "rule-providers": {
+                    "proxy-merged-" + kind: {"behavior": behavior, "format": "yaml"}
+                    for kind, behavior in (("domain", "domain"), ("classical", "classical"), ("ip", "ipcidr"))
+                },
+                "rules": ["RULE-SET,proxy-merged-domain,PROXY",
+                          "RULE-SET,proxy-merged-classical,PROXY",
+                          "RULE-SET,proxy-merged-ip,PROXY,no-resolve"],
+                "dns": {"nameserver-policy": {"rule-set:proxy-merged-domain,proxy-merged-classical": []}},
+            }
             fixtures = {
                 "proxy-merged-domain": 'payload:\n  - "exact.example"\n  - "+.suffix.example"\n',
                 "proxy-merged-classical": 'payload:\n  - "DOMAIN-KEYWORD,google"\n',
@@ -138,8 +146,6 @@ class NativeProviderTests(unittest.TestCase):
                 path = self.root / (name + ".yaml")
                 path.write_text(fixtures[name])
                 provider.update(type="file", path=str(path))
-                provider.pop("url")
-                provider.pop("interval")
             config["proxy-groups"] = [{"name": "PROXY", "type": "select", "proxies": ["DIRECT"]}]
             config["rules"].append("MATCH,REJECT")
             controller = controller_port()
