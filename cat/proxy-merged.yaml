@@ -6909,6 +6909,7 @@ payload:
   - "DOMAIN-KEYWORD,onedrive"
   - "DOMAIN-KEYWORD,skydrive"
   - "DOMAIN-KEYWORD,youtube"
+  - "DOMAIN-SUFFIX,51papaya.com"
   - "DOMAIN-SUFFIX,666pool.cn"
   - "DOMAIN-SUFFIX,aboluowang.com"
   - "DOMAIN-SUFFIX,api.steampowered.com"
