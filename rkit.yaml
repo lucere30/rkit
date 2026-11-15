@@ -5,6 +5,13 @@ targets:
   mihomo: true
   singbox: false
 rulesets:
+  claude:
+    sources:
+    - path: lq/manual/claude.list
+      format: classical
+    targets:
+    - loon
+    - mihomo
   direct:
     sources:
     - path: lq/manual/direct.list
