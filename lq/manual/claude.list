@@ -1,38 +1,20 @@
-# AI Proxy Rules — Anthropic / Claude / Claude Code
-# RULE-SET for Shadowrocket / Surge / Loon / Stash (no policy on each line)
-# Vendored snapshot: ma-wenqian/ai-proxy-rules rules/claude.list
-# Upstream blob: 65e4daaf7a5fbd5623d1d5e0e5b9b22afe6d2c4b
+# Anthropic / Claude — Loon Rule
+# https://github.com/xiaolai/anthropic-claude-surge-rules-set
+# Generated: 2026-04-14
+# Vendored snapshot: dist/anthropic-loon.conf
+# Upstream blob: 23b68e078e96259299c0e92c1a17d9aa3dc64cdd
 # Imported: 2026-11-15. Rules are stored locally; no remote source dependency.
 
-# API — used by Claude Code, the SDKs and third-party clients
-# API：Claude Code、SDK、第三方客户端都走这里
-DOMAIN,api.anthropic.com
-
-# Site, console, docs, login / 主站、控制台、文档、登录
 DOMAIN-SUFFIX,anthropic.com
 DOMAIN-SUFFIX,claude.ai
 DOMAIN-SUFFIX,claude.com
-
-# Uploads and the Artifacts sandbox / 用户上传与 Artifacts 沙箱
 DOMAIN-SUFFIX,claudeusercontent.com
-
-# MCP Apps sandbox (connector UIs rendered in chat) / MCP Apps 沙箱（对话里渲染的连接器界面）
-DOMAIN-SUFFIX,claudemcpcontent.com
-
-# Short links and developer blog / 官方短链与开发者博客
 DOMAIN-SUFFIX,clau.de
-DOMAIN-SUFFIX,claude.dev
-
-# Anthropic's own IP blocks (ARIN, AS399358) — catches clients that skip the domain
-# rules (connect by IP, DoH, hard-coded resolvers)
-# Anthropic 自有 IP 段（ARIN 注册，AS399358），兜住绕过域名规则（直连 IP、DoH 等）的客户端
+DOMAIN-SUFFIX,modelcontextprotocol.io
+DOMAIN,downloads.claude.ai
+DOMAIN,storage.googleapis.com
+DOMAIN,cdn.growthbook.io
+IP-CIDR,160.79.104.0/23,no-resolve
 IP-CIDR,160.79.104.0/21,no-resolve
-IP-CIDR6,2607:6bc0::/32,no-resolve
-
-# Analytics. Not required, but the web app can hang on load without it.
-# Segment is a shared analytics service — drop these two lines if you would
-# rather not route other sites' telemetry through the proxy.
-# 埋点上报。不走代理不影响使用，但网页端偶尔会卡在加载态。
-# segment 是通用分析服务，不想让其它站点的埋点也走代理就删掉这两行。
-DOMAIN-SUFFIX,segment.io
-DOMAIN-SUFFIX,segment.com
+IP-CIDR6,2607:6bc0::/48,no-resolve
+DOMAIN,cdn.usefathom.com
