@@ -6,7 +6,7 @@
         "engine": "152e4558a9bf3a6b80266367e4db6d8380185c2eb29feeee10431aebbd207256",
         "inputs": [
           {
-            "sha256": "ac7b87ff085cee9e3b2973f701c2b832b73dfb379cf9eb1100bae591dafcece2",
+            "sha256": "ca667e7a8f8f00bdb1cc2b7b6934715a1b0623b9503e2450456ba9d93af2739e",
             "source": "https://raw.githubusercontent.com/deezertidal/private/refs/heads/main/rule/ADLite.list"
           }
         ],
@@ -21,7 +21,7 @@
         "engine": "152e4558a9bf3a6b80266367e4db6d8380185c2eb29feeee10431aebbd207256",
         "inputs": [
           {
-            "sha256": "ac7b87ff085cee9e3b2973f701c2b832b73dfb379cf9eb1100bae591dafcece2",
+            "sha256": "ca667e7a8f8f00bdb1cc2b7b6934715a1b0623b9503e2450456ba9d93af2739e",
             "source": "https://raw.githubusercontent.com/deezertidal/private/refs/heads/main/rule/ADLite.list"
           }
         ],
@@ -118,6 +118,37 @@
           "singbox/bitget_ip.json": "2db6ae8eb9d24cb86924a7020c6f3eebfa41b5fc5848a53e239465db622c2312"
         },
         "rules": 44
+      }
+    },
+    "claude": {
+      "loon": {
+        "config_sha256": "a6fb8b766dc94fe210f5b173704a89409daed564642c141e5d3a71a554957146",
+        "engine": "152e4558a9bf3a6b80266367e4db6d8380185c2eb29feeee10431aebbd207256",
+        "inputs": [
+          {
+            "sha256": "0eb55748f8aae093229fd2be2c5402d9240f4671dcb7b5153b529707aec40b8a",
+            "source": "lq/manual/claude.list"
+          }
+        ],
+        "omitted": {},
+        "outputs": {},
+        "rules": 11,
+        "subscription": "lq/manual/claude.list"
+      },
+      "mihomo": {
+        "config_sha256": "a6fb8b766dc94fe210f5b173704a89409daed564642c141e5d3a71a554957146",
+        "engine": "152e4558a9bf3a6b80266367e4db6d8380185c2eb29feeee10431aebbd207256",
+        "inputs": [
+          {
+            "sha256": "0eb55748f8aae093229fd2be2c5402d9240f4671dcb7b5153b529707aec40b8a",
+            "source": "lq/manual/claude.list"
+          }
+        ],
+        "omitted": {},
+        "outputs": {
+          "cat/claude.yaml": "5e3785deafe62e379383cebdc63294a7999fb4407424fd69556d310809b20908"
+        },
+        "rules": 11
       }
     },
     "direct": {
