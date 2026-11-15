@@ -6,7 +6,7 @@
         "engine": "152e4558a9bf3a6b80266367e4db6d8380185c2eb29feeee10431aebbd207256",
         "inputs": [
           {
-            "sha256": "ca667e7a8f8f00bdb1cc2b7b6934715a1b0623b9503e2450456ba9d93af2739e",
+            "sha256": "aa36fffa54dfa900ed8f83afe0f5acf9c2ad89cce2916a653e0e007d825c5834",
             "source": "https://raw.githubusercontent.com/deezertidal/private/refs/heads/main/rule/ADLite.list"
           }
         ],
@@ -21,7 +21,7 @@
         "engine": "152e4558a9bf3a6b80266367e4db6d8380185c2eb29feeee10431aebbd207256",
         "inputs": [
           {
-            "sha256": "ca667e7a8f8f00bdb1cc2b7b6934715a1b0623b9503e2450456ba9d93af2739e",
+            "sha256": "aa36fffa54dfa900ed8f83afe0f5acf9c2ad89cce2916a653e0e007d825c5834",
             "source": "https://raw.githubusercontent.com/deezertidal/private/refs/heads/main/rule/ADLite.list"
           }
         ],
@@ -126,7 +126,7 @@
         "engine": "152e4558a9bf3a6b80266367e4db6d8380185c2eb29feeee10431aebbd207256",
         "inputs": [
           {
-            "sha256": "f548f2862767068b9d8fb9870829143d808b4cd0851f4edd039a9e3f2157bc13",
+            "sha256": "e81934e6c13fda346859bbe1a867ffb9a2bb645944b293bbbc09b559b62d2ca7",
             "source": "lq/manual/claude.list"
           }
         ],
@@ -140,13 +140,13 @@
         "engine": "152e4558a9bf3a6b80266367e4db6d8380185c2eb29feeee10431aebbd207256",
         "inputs": [
           {
-            "sha256": "f548f2862767068b9d8fb9870829143d808b4cd0851f4edd039a9e3f2157bc13",
+            "sha256": "e81934e6c13fda346859bbe1a867ffb9a2bb645944b293bbbc09b559b62d2ca7",
             "source": "lq/manual/claude.list"
           }
         ],
         "omitted": {},
         "outputs": {
-          "cat/claude.yaml": "c8506c5971518a19527ea1c61c240633ccc129219854634c2989de6594aeacee"
+          "cat/claude.yaml": "a3cba6cbfb71f999ca3d877c8d5296a53ebb1d8ba18d002730af3bbcf1a3dcc6"
         },
         "rules": 8
       }
