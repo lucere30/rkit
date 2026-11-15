@@ -126,13 +126,13 @@
         "engine": "152e4558a9bf3a6b80266367e4db6d8380185c2eb29feeee10431aebbd207256",
         "inputs": [
           {
-            "sha256": "a402efb6894b32b4f7bf182234d8b83a6fc7200824438022259fe669f53a0bd0",
+            "sha256": "f548f2862767068b9d8fb9870829143d808b4cd0851f4edd039a9e3f2157bc13",
             "source": "lq/manual/claude.list"
           }
         ],
         "omitted": {},
         "outputs": {},
-        "rules": 12,
+        "rules": 8,
         "subscription": "lq/manual/claude.list"
       },
       "mihomo": {
@@ -140,15 +140,15 @@
         "engine": "152e4558a9bf3a6b80266367e4db6d8380185c2eb29feeee10431aebbd207256",
         "inputs": [
           {
-            "sha256": "a402efb6894b32b4f7bf182234d8b83a6fc7200824438022259fe669f53a0bd0",
+            "sha256": "f548f2862767068b9d8fb9870829143d808b4cd0851f4edd039a9e3f2157bc13",
             "source": "lq/manual/claude.list"
           }
         ],
         "omitted": {},
         "outputs": {
-          "cat/claude.yaml": "18fcbfbe1704080ab86bee5eca30095946e7a31171f87ab3c9943c006022fa80"
+          "cat/claude.yaml": "c8506c5971518a19527ea1c61c240633ccc129219854634c2989de6594aeacee"
         },
-        "rules": 12
+        "rules": 8
       }
     },
     "direct": {
