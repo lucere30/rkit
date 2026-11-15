@@ -12,5 +12,5 @@ DOMAIN-SUFFIX,claudeusercontent.com
 DOMAIN-SUFFIX,clau.de
 DOMAIN,downloads.claude.ai
 IP-CIDR,160.79.104.0/23,no-resolve
-IP-CIDR,160.79.104.0/21,no-resolve
+IP-CIDR,153.61.224.0/22,no-resolve
 IP-CIDR6,2607:6bc0::/48,no-resolve
