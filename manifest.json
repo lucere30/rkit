@@ -6,30 +6,30 @@
         "engine": "152e4558a9bf3a6b80266367e4db6d8380185c2eb29feeee10431aebbd207256",
         "inputs": [
           {
-            "sha256": "4214dd2b360ab984a0deb1f77ccc538e15aba2ceae7ce411c51757e691b706e1",
+            "sha256": "da17371a40feb6cb0335eed64bcbabbb57d69f0f0187e6d1e87c9587239a60f3",
             "source": "https://raw.githubusercontent.com/deezertidal/private/refs/heads/main/rule/ADLite.list"
           }
         ],
         "omitted": {},
         "outputs": {
-          "lq/generated/adlite.list": "4c46fd5854d89eb9aabf6772ae6d839e7727359b720544ac6ce2bbaccb7757c9"
+          "lq/generated/adlite.list": "d8b47e050ced72888b288ac79128e2bf682a17015f72b292fd193d660cf30b3c"
         },
-        "rules": 53172
+        "rules": 53531
       },
       "mihomo": {
         "config_sha256": "a79a8ed7c506f260765fe93b7eedea1482f54a4a9e5e3ceeef104dbea59b4c52",
         "engine": "152e4558a9bf3a6b80266367e4db6d8380185c2eb29feeee10431aebbd207256",
         "inputs": [
           {
-            "sha256": "4214dd2b360ab984a0deb1f77ccc538e15aba2ceae7ce411c51757e691b706e1",
+            "sha256": "da17371a40feb6cb0335eed64bcbabbb57d69f0f0187e6d1e87c9587239a60f3",
             "source": "https://raw.githubusercontent.com/deezertidal/private/refs/heads/main/rule/ADLite.list"
           }
         ],
         "omitted": {},
         "outputs": {
-          "cat/adlite.yaml": "953f46395f8a588a2b6c38d0ab73076f5bbbe0c915b21e749e9adacaaa08101f"
+          "cat/adlite.yaml": "7ed46250f895a0b0040ebcec298797b7d6cf07911c2ea6f86971649763051f94"
         },
-        "rules": 53172
+        "rules": 53531
       },
       "singbox": {
         "config_sha256": "a79a8ed7c506f260765fe93b7eedea1482f54a4a9e5e3ceeef104dbea59b4c52",
